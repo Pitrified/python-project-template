@@ -100,6 +100,17 @@ Notebook dependencies
 poetry add ipykernel ipywidgets
 ```
 
+Scraping dependencies
+
+```bash
+poetry add \
+    beautifulsoup4 lxml \
+    httpx \
+    requests \
+    scrapy \
+    aiohttp
+```
+
 Test dependencies
 
 ```bash
