@@ -1,0 +1,11 @@
+{
+    "cSpell.words": [
+        "project_name"
+    ],
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.envFile": "/home/pmn/cred/project_name/.env"
+}
