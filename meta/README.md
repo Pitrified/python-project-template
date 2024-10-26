@@ -2,18 +2,25 @@
 
 ## Set up a new Python project
 
-Download the zipped repo from GitHub.
-<!-- TODO a link to the download page. -->
+Clone the `python-project-template` repo.
 
-Unzip the repo.
+```bash
+git clone git@github.com:Pitrified/python-project-template.git
+```
 
 Run the
 [rename_project.py](meta/rename_project.py)
 script to rename the project.
 
-<!-- Then run script [init.sh](meta/init.sh) to initialize the project. -->
+```bash
+python python_project_template/meta/rename_project.py
+```
 
-Go to the new folder.
+Go to the new folder:
+
+```bash
+cd project_name
+```
 
 Install the project:
 
@@ -26,6 +33,8 @@ poetry install
 <!-- TODO automagically generate the optional dependencies list -->
 
 Install the required dependencies:
+(actually already done by the `poetry install` command, the existing dependencies of the template project are kept in the `pyproject.toml` file)
+So this command is only needed to bump the versions of the dependencies.
 
 ```bash
 poetry add loguru

@@ -19,10 +19,12 @@ Support documentation with sphinx or mkdocs.
 
 ### Write a script to initialize the project
 
-- [ ] Copy the `project_name` folder to the new project name.
-- [ ] Replace all instances of `project_name` with the new project name.
+- [x] Copy the `project_name` folder to the new project name.
+- [x] Replace all instances of `project_name` with the new project name.
       With proper capitalization.
 - [ ] Remove dependencies from the `pyproject.toml` file.
 - [ ] Automagically generate the optional dependencies list,
       by parsing the `pyproject.toml` file.
-      I don't like this already. Just put the dependencies in the meta README.
+      The dependencies are the same as the ones in the `pyproject.toml` file,
+      but by running `poetry add` again the versions are updated.
+- [ ] Refactor rename_project.py to be a class.
