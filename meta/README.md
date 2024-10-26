@@ -61,7 +61,7 @@ Install the dependencies you want with the following commands
 Log and formatting dependencies
 
 ```bash
-poetry add loguru rich
+poetry add loguru rich tqdm
 ```
 
 LLM dependencies
