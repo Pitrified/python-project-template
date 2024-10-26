@@ -16,6 +16,10 @@ script to rename the project.
 python python_project_template/meta/rename_project.py
 ```
 
+By this point, the project is already set up with the new name.
+This README file will be copied in `README_POST_CREATE.md`,
+with the name of the project updated.
+
 Go to the new folder:
 
 ```bash
