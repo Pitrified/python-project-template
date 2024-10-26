@@ -116,7 +116,7 @@ class Rename:
         skip_portions = [
             "README.md",
             "poetry.lock",
-            "rename_project.py",
+            "meta/rename_project.py",
         ]
         # special cases to rename
         special_portions = {
