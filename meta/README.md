@@ -115,4 +115,5 @@ Test dependencies
 
 ```bash
 poetry add --dev pytest
+poetry add pytest-cov
 ```
