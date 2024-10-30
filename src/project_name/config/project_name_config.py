@@ -22,5 +22,11 @@ class ProjectNameConfig(metaclass=Singleton):
         return str(self)
 
 
-PROJECT_NAME_CONFIG = ProjectNameConfig()
-PROJECT_NAME_PATHS = PROJECT_NAME_CONFIG.paths
+def get_project_name_config() -> ProjectNameConfig:
+    """Get the project_name config."""
+    return ProjectNameConfig()
+
+
+def get_project_name_paths() -> ProjectNamePaths:
+    """Get the project_name paths."""
+    return get_project_name_config().paths
