@@ -8,7 +8,7 @@ Clone the `python-project-template` repo.
 git clone git@github.com:Pitrified/python-project-template.git
 ```
 
-Run the
+From outside the repo, run the
 [rename_project.py](meta/rename_project.py)
 script to rename the project.
 
@@ -42,7 +42,7 @@ So this command is only needed to bump the versions of the dependencies.
 
 ```bash
 poetry add loguru
-poetry add --dev pytest
+poetry add --group dev pytest
 ```
 
 Initialize the git repository, set the identity, and make the first commit:
@@ -50,7 +50,8 @@ Initialize the git repository, set the identity, and make the first commit:
 ```bash
 git init
 git add .
-gitid ...
+git add **/.gitkeep -f
+# gitid ...
 git commit -m "Initial commit"
 ```
 
@@ -84,7 +85,10 @@ poetry add \
 Data dependencies
 
 ```bash
-poetry add pandas numpy matplotlib seaborn scikit-learn
+poetry add \
+    pandas numpy matplotlib seaborn scikit-learn \
+    plotly altair bokeh
+    kaleido==0.2.1
 ```
 
 Web dependencies
@@ -97,7 +101,7 @@ poetry add streamlit
 Notebook dependencies
 
 ```bash
-poetry add ipykernel ipywidgets
+poetry add ipykernel ipywidgets nbformat
 ```
 
 Scraping dependencies
@@ -114,6 +118,6 @@ poetry add \
 Test dependencies
 
 ```bash
-poetry add --dev pytest
-poetry add pytest-cov
+poetry add --group dev pytest
+poetry add --group dev pytest-cov
 ```
