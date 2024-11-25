@@ -49,9 +49,9 @@ class Rename:
 
     def get_inputs(self) -> None:
         """Get the new project and repo names."""
-        self.new_name = input("Enter the new project name: ")
+        self.new_name = input("Enter the new project_name: ")
         # self.new_name = "sample_project"
-        repo_prompt = f"Enter the new repo name [{self.new_name}]: "
+        repo_prompt = f"Enter the new repo_name [{self.new_name}]: "
         self.repo_name = input(repo_prompt) or self.new_name
         # self.repo_name = "repo_sample_project"
 
