@@ -15,6 +15,8 @@ Support codecov.
 
 Support documentation with sphinx or mkdocs.
 
+Automatic dependency updates  with [uv-bump](https://github.com/zundertj/uv-bump).
+
 ## TODOs
 
 ### Write a script to initialize the project
@@ -27,4 +29,4 @@ Support documentation with sphinx or mkdocs.
       by parsing the `pyproject.toml` file.
       The dependencies are the same as the ones in the `pyproject.toml` file,
       but by running `poetry add` again the versions are updated.
-- [ ] Refactor rename_project.py to be a class.
+- [x] Refactor rename_project.py to be a class.
