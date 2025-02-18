@@ -2,8 +2,6 @@
 
 from pathlib import Path
 
-from loguru import logger as lg
-
 import project_name
 
 
@@ -34,7 +32,8 @@ class ProjectNamePaths:
         self.static_fol = self.root_fol / "static"
 
     def __str__(self) -> str:
-        s = f"ProjectNamePaths:\n"
+        """Return the string representation of the object."""
+        s = "ProjectNamePaths:\n"
         s += f"   src_fol: {self.src_fol}\n"
         s += f"  root_fol: {self.root_fol}\n"
         s += f" cache_fol: {self.cache_fol}\n"

@@ -6,10 +6,11 @@
 1. Create a credentials file.
 """
 
+from collections.abc import Generator
 from pathlib import Path
 from pprint import pprint as pp
 import shutil
-from typing import Any, Generator
+from typing import Any
 
 
 def replace_in_str(s: str, name_map: dict[str, str]) -> str:
@@ -40,7 +41,7 @@ def update_file_content(fp: Path, name_map: dict[str, str]) -> None:
 class Rename:
     """Class to rename a project."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the Rename class."""
         self.get_inputs()
         self.build_name_map()
@@ -50,10 +51,8 @@ class Rename:
     def get_inputs(self) -> None:
         """Get the new project and repo names."""
         self.new_name = input("Enter the new project_name: ")
-        # self.new_name = "sample_project"
         repo_prompt = f"Enter the new repo_name [{self.new_name}]: "
         self.repo_name = input(repo_prompt) or self.new_name
-        # self.repo_name = "repo_sample_project"
 
     def build_name_map(self) -> None:
         """Build the capitalized name."""
@@ -75,8 +74,6 @@ class Rename:
     def build_roots(self) -> None:
         """Build the roots of the old and new projects."""
         self.old_root_fol = Path(__file__).parents[1].resolve()
-        # print(f"{self.old_root_fol}")
-
         self.new_root_fol = (
             self.old_root_fol.parent / self.name_map["python_project_template"]
         )
@@ -129,7 +126,6 @@ class Rename:
 
             # skip certain files
             if str(old_relative_portion) in skip_portions:
-                # print(f"Skipping {old_fp}")
                 continue
 
             # change the file name in the relative portion
@@ -139,20 +135,16 @@ class Rename:
             else:
                 # change the file name in the standard way with the name map
                 new_relative_portion = Path(
-                    replace_in_str(str(old_relative_portion), self.name_map)
+                    replace_in_str(str(old_relative_portion), self.name_map),
                 )
-            # print(f"{old_relative_portion=} {new_relative_portion=}")
 
             # get the destination path
             new_fp = self.new_root_fol / new_relative_portion
-            # print(f".  {old_fp}\n > {new_fp}")
 
             # ensure the destination directory exists
             new_fp.parent.mkdir(parents=True, exist_ok=True)
             # copy the file
             shutil.copy(old_fp, new_fp)
-
-            # break
 
     def update_files(self) -> None:
         """Update the contents of the files."""
@@ -166,7 +158,7 @@ class Rename:
         self.cred_fp.write_text(sample_cred)
 
     def main(self) -> None:
-        """Main method to execute the renaming process."""
+        """Run main method to execute the renaming process."""
         if not self.check_inputs():
             print("Exiting.")
             return

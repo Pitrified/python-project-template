@@ -10,15 +10,18 @@ class ProjectNameConfig(metaclass=Singleton):
     """ProjectName project configuration."""
 
     def __init__(self) -> None:
-        lg.info(f"Loading ProjectName config")
+        """Load the ProjectName config."""
+        lg.info("Loading ProjectName config")
         self.paths = ProjectNamePaths()
 
     def __str__(self) -> str:
+        """Return the string representation of the object."""
         s = "ProjectNameConfig:"
         s += f"\n{self.paths}"
         return s
 
     def __repr__(self) -> str:
+        """Return the string representation of the object."""
         return str(self)
 
 

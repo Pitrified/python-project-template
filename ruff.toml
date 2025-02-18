@@ -1,8 +1,13 @@
+# Ruff configuration file
+# https://docs.astral.sh/ruff/rules/
+
 [lint]
 select = ["ALL"]
 ignore = [
     # "ANN002", # Missing type annotation for *{name}
     # "ANN003", # Missing type annotation for **{name}
+    "D203", # 1 blank line required before class docstring
+    "D213", # Multi-line docstring summary should start at the second line
 ]
 
 [lint.per-file-ignores]
@@ -12,6 +17,11 @@ ignore = [
 "tests/*" = [
     "S101", # Use of assert detected
 ]
+"meta/*" = [
+    "INP001", # Implicit namespace package
+    "T20", # print found
+]
+
 
 [lint.isort]
 force-sort-within-sections = true
