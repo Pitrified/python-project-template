@@ -5,7 +5,7 @@
 To install the package, run the following command:
 
 ```bash
-poetry install
+uv sync --all-extras --all-groups
 ```
 
 ## Setup
@@ -25,12 +25,26 @@ workspace [settings file](.vscode/settings.json):
 
 Note that the path to the `.env` file should be absolute.
 
+## Pre-commit
+
+To install the pre-commit hooks, run the following command:
+
+```bash
+pre-commit install
+```
+
+Run against all the files:
+
+```bash
+pre-commit run --all-files
+```
+
 ## Testing
 
 To run the tests, use the following command:
 
 ```bash
-poetry run pytest
+uv run pytest
 ```
 
 or use the VSCode interface.

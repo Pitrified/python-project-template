@@ -1,6 +1,5 @@
 """Test the project_name paths."""
 
-
 from project_name.config.project_name_config import get_project_name_paths
 
 
