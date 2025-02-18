@@ -1,0 +1,17 @@
+[lint]
+select = ["ALL"]
+ignore = [
+    # "ANN002", # Missing type annotation for *{name}
+    # "ANN003", # Missing type annotation for **{name}
+]
+
+[lint.per-file-ignores]
+"*.ipynb" = [
+    "T20", # print found
+]
+"tests/*" = [
+    "S101", # Use of assert detected
+]
+
+[lint.isort]
+force-sort-within-sections = true
