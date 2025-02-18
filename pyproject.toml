@@ -28,6 +28,7 @@ dev = [
     "ruff>=0.9.6",
     "pyright[nodejs]>=1.1.394",
     "pre-commit>=4.1.0",
+    "detect-secrets>=1.5.0",
 ]
 
 [tool.pyright]
