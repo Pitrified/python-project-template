@@ -81,7 +81,8 @@ class Rename:
 
     def build_cred_fp(self) -> None:
         """Build the credentials file path."""
-        self.cred_fp = Path.home() / "cred" / self.name_map["project_name"] / ".env"
+        new_repo_name = self.name_map["python_project_template"]
+        self.cred_fp = Path.home() / "cred" / new_repo_name / ".env"
 
     def check_inputs(self) -> bool:
         """Check that the project name is correct and not already in use."""
