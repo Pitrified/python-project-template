@@ -13,7 +13,7 @@ From outside the repo, run the
 script to rename the project.
 
 ```bash
-python python_project_template/meta/rename_project.py
+python python-project-template/meta/rename_project.py
 ```
 
 By this point, the project is already set up with the new name.
@@ -29,7 +29,7 @@ cd project_name
 Install the project:
 
 ```bash
-poetry install
+uv sync --all-extras --all-groups
 ```
 
 <!-- Install the optional dependencies with the following command: -->
@@ -37,12 +37,18 @@ poetry install
 <!-- TODO automagically generate the optional dependencies list -->
 
 Install the required dependencies:
-(actually already done by the `poetry install` command, the existing dependencies of the template project are kept in the `pyproject.toml` file)
+(actually already done by the `uv sync` command, the existing dependencies of the template project are kept in the `pyproject.toml` file)
 So this command is only needed to bump the versions of the dependencies.
 
 ```bash
-poetry add loguru
-poetry add --group dev pytest
+uv add loguru
+uv add --group dev pytest
+```
+
+You can update the dependencies with the following command:
+
+```bash
+uv add loguru --upgrade-package loguru
 ```
 
 Initialize the git repository, set the identity, and make the first commit:
@@ -62,15 +68,15 @@ Install the dependencies you want with the following commands
 Log and formatting dependencies
 
 ```bash
-poetry add loguru rich tqdm
+uv add loguru rich tqdm
 ```
 
 LLM dependencies
 
 ```bash
-poetry add transformers accelerate
-poetry add torch
-poetry add \
+uv add transformers accelerate
+uv add torch
+uv add \
     chromadb \
     langchain \
     langchain-chroma \
@@ -85,7 +91,7 @@ poetry add \
 Data dependencies
 
 ```bash
-poetry add \
+uv add \
     pandas numpy matplotlib seaborn scikit-learn \
     plotly altair bokeh
     kaleido==0.2.1
@@ -94,20 +100,20 @@ poetry add \
 Web dependencies
 
 ```bash
-poetry add fastapi uvicorn
-poetry add streamlit
+uv add fastapi uvicorn
+uv add streamlit
 ```
 
 Notebook dependencies
 
 ```bash
-poetry add ipykernel ipywidgets nbformat
+uv add ipykernel ipywidgets nbformat
 ```
 
 Scraping dependencies
 
 ```bash
-poetry add \
+uv add \
     beautifulsoup4 lxml \
     httpx \
     requests \
@@ -118,6 +124,6 @@ poetry add \
 Test dependencies
 
 ```bash
-poetry add --group dev pytest
-poetry add --group dev pytest-cov
+uv add --group dev pytest
+uv add --group dev pytest-cov
 ```
