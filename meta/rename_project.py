@@ -107,6 +107,7 @@ class Rename:
             "__pycache__",
             ".pytest_cache",
             ".git",
+            ".venv",
             # "meta",
         ]
         # skip these files
