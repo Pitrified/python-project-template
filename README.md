@@ -28,5 +28,5 @@ Automatic dependency updates  with [uv-bump](https://github.com/zundertj/uv-bump
 - [ ] Automagically generate the optional dependencies list,
       by parsing the `pyproject.toml` file.
       The dependencies are the same as the ones in the `pyproject.toml` file,
-      but by running `poetry add` again the versions are updated.
+      but by running `uv add` again the versions are updated.
 - [x] Refactor rename_project.py to be a class.

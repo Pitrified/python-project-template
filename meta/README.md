@@ -32,20 +32,21 @@ Install the project:
 uv sync --all-extras --all-groups
 ```
 
+
 <!-- Install the optional dependencies with the following command: -->
 <!-- {{optional_dependencies}} -->
 <!-- TODO automagically generate the optional dependencies list -->
 
 Install the required dependencies:
-(actually already done by the `uv sync` command, the existing dependencies of the template project are kept in the `pyproject.toml` file)
-So this command is only needed to bump the versions of the dependencies.
+(already done by the `uv sync` command, as the existing dependencies of the template project are kept in the `pyproject.toml` file)
+To bump the versions of dependencies, use:
 
 ```bash
 uv add loguru
 uv add --group dev pytest
 ```
 
-You can update the dependencies with the following command:
+You can update dependencies with:
 
 ```bash
 uv add loguru --upgrade-package loguru
@@ -64,6 +65,7 @@ git commit -m "Initial commit"
 ## Install additional dependencies
 
 Install the dependencies you want with the following commands
+
 
 Log and formatting dependencies
 
