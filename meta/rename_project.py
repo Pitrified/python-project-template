@@ -107,6 +107,7 @@ class Rename:
         skip_fols = [
             "__pycache__",
             ".pytest_cache",
+            ".ruff_cache",
             ".git",
             ".venv",
             # "meta",
@@ -115,6 +116,7 @@ class Rename:
         skip_portions = [
             "README.md",
             "poetry.lock",
+            "uv.lock",
             "meta/rename_project.py",
         ]
         # special cases to rename
