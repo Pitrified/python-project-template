@@ -1,5 +1,13 @@
 # UV package manager
 
+## Dependencies group
+
+To add a package to a specific group, use the `--group` option:
+
+```bash
+uv add --group lint ruff
+```
+
 ## Upgrade packages
 
 Upgrades the lock, but not the dependencies in `pyproject.toml`.

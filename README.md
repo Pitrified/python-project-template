@@ -24,6 +24,10 @@ Expose a minimal CLI app with [Typer](https://typer.tiangolo.com/).
 
 Convert the whole thing to a [Copier](https://copier.readthedocs.io/en/stable/) template.
 
+Town crier integration.
+
+Release management with semantic versioning.
+
 ## TODOs
 
 ### Write a script to initialize the project
@@ -45,3 +49,14 @@ Convert the whole thing to a [Copier](https://copier.readthedocs.io/en/stable/) 
 ### Tests
 
 - [ ] Add tests for new features
+
+### pyproject.toml structure
+
+- [ ] Split dev dependencies into groups
+  - [ ] lint
+  - [ ] test
+  - [ ] doc
+  - [ ] ci
+- [ ] Add optional dependencies (extra sections)
+  - [ ] some optional feature
+  - [ ] full (all optional dependencies)
