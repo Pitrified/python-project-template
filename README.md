@@ -68,3 +68,13 @@ Release management with semantic versioning.
 - [ ] add info on how to keep it updated
 - [ ] add info on how to set it up
 - [ ] add info on how to handle false positives
+
+### Check that proj name is valid python package name
+
+- [ ] add check in renamer script
+  - [ ] check for invalid characters (eg `-`, spaces, etc)
+- [ ] add info in readme
+
+### Get names from CLI
+
+- [ ] get project name from CLI arguments
