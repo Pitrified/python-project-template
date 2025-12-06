@@ -20,7 +20,7 @@ def replace_in_str(s: str, name_map: dict[str, str]) -> str:
     return s
 
 
-def rglobber(fol: Path, skip_fols: list[str]) -> Generator[Path, Any, None]:
+def rglobber(fol: Path, skip_fols: list[str]) -> Generator[Path, Any]:
     """Recursively glob files, skipping directories."""
     for item in sorted(fol.iterdir()):
         if item.is_dir() and item.name in skip_fols:
