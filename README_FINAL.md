@@ -8,8 +8,6 @@ To install the package:
 
 Setup [`uv`](https://docs.astral.sh/uv/getting-started/installation/).
 
-Install the correct [python version](https://docs.astral.sh/uv/guides/install-python/) if needed.
-
 ### Install the package
 
 Run the following command:
