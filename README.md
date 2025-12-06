@@ -49,6 +49,7 @@ Release management with semantic versioning.
 ### Tests
 
 - [ ] Add tests for new features
+- [ ] Load dotenv in tests setup
 
 ### pyproject.toml structure
 

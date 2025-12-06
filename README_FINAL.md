@@ -20,6 +20,8 @@ uv sync --all-extras --all-groups
 
 ## Setup
 
+### Environment Variables
+
 To setup the package, create a `.env` file in `~/cred/project_name/.env` with the following content:
 
 ```bash
@@ -35,7 +37,7 @@ workspace [settings file](.vscode/settings.json):
 
 Note that the path to the `.env` file should be absolute.
 
-## Pre-commit
+### Pre-commit
 
 To install the pre-commit hooks, run the following command:
 
@@ -49,7 +51,7 @@ Run against all the files:
 pre-commit run --all-files
 ```
 
-## Linting
+### Linting
 
 Use pyright for type checking:
 
@@ -64,7 +66,7 @@ uv run ruff check --fix
 uv run ruff format
 ```
 
-## Testing
+### Testing
 
 To run the tests, use the following command:
 
