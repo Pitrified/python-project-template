@@ -8,7 +8,7 @@ Happy coding!
 
 ## IDEAs
 
-Fancier automation with github actions.
+Fancier automation with github actions (eg):
 
 - https://github.com/rochacbruno/python-project-template
 
@@ -30,10 +30,6 @@ Release management with semantic versioning.
 
 ## TODOs
 
-### Load dotenv in code
-
-- [ ] load it in __init__.py
-
 ### Write a script to initialize the project (renamer)
 
 - [ ] Remove dependencies from the `pyproject.toml` file.
@@ -45,23 +41,24 @@ Release management with semantic versioning.
 ### Vibes
 
 - [ ] Add agents to maintain the project.
-  - [ ] meta agent to maintain the agents themselves and general instructions
+  - [x] meta agent to maintain the agents themselves and general instructions
   - [ ] dependency update agent
+  - [x] dev agent
   - [ ] test agent
   - [ ] documentation agent
 
 ### Tests
 
 - [ ] Add tests for new features
-- [ ] Load dotenv in tests setup
+- [x] Load dotenv in tests setup (done in init of whole package)
 
 ### pyproject.toml structure
 
-- [ ] Split dev dependencies into groups
-  - [ ] lint
-  - [ ] test
-  - [ ] doc
-  - [ ] ci
+- [x] Split dev dependencies into groups
+  - [x] lint
+  - [x] test
+  - [ ] doc (?? we don't have any doc specific deps yet)
+  - [ ] ci (?? we don't have any ci specific deps yet)
 - [ ] Add optional dependencies (extra sections)
   - [ ] some optional feature
   - [ ] full (all optional dependencies)
