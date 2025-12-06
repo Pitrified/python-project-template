@@ -1,5 +1,5 @@
 {
-    "python.envFile": "/home/pmn/cred/python_project_template/.env",
+    "python.envFile": "/home/pmn/cred/python-project-template/.env",
     "cSpell.words": [
         "ipynb",
         "isort",
