@@ -60,3 +60,9 @@ Release management with semantic versioning.
 - [ ] Add optional dependencies (extra sections)
   - [ ] some optional feature
   - [ ] full (all optional dependencies)
+
+### Detect secret
+
+- [ ] add info on how to keep it updated
+- [ ] add info on how to set it up
+- [ ] add info on how to handle false positives
