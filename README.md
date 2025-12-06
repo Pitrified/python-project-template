@@ -38,20 +38,6 @@ Release management with semantic versioning.
       The dependencies are the same as the ones in the `pyproject.toml` file,
       but by running `uv add` again the versions are updated.
 
-### Vibes
-
-- [ ] Add agents to maintain the project.
-  - [x] meta agent to maintain the agents themselves and general instructions
-  - [ ] dependency update agent
-  - [x] dev agent
-  - [ ] test agent
-  - [ ] documentation agent
-
-### Tests
-
-- [ ] Add tests for new features
-- [x] Load dotenv in tests setup (done in init of whole package)
-
 ### pyproject.toml structure
 
 - [x] Split dev dependencies into groups
