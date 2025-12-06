@@ -30,7 +30,11 @@ Release management with semantic versioning.
 
 ## TODOs
 
-### Write a script to initialize the project
+### Load dotenv in code
+
+- [ ] load it in __init__.py
+
+### Write a script to initialize the project (renamer)
 
 - [ ] Remove dependencies from the `pyproject.toml` file.
 - [ ] Automagically generate the optional dependencies list,
