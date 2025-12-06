@@ -49,6 +49,21 @@ Run against all the files:
 pre-commit run --all-files
 ```
 
+## Linting
+
+Use pyright for type checking:
+
+```bash
+uv run pyright
+```
+
+Use ruff for linting:
+
+```bash
+uv run ruff check --fix
+uv run ruff format
+```
+
 ## Testing
 
 To run the tests, use the following command:
