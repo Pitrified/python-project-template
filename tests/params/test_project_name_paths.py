@@ -1,6 +1,6 @@
 """Test the project_name paths."""
 
-from project_name.config.project_name_config import get_project_name_paths
+from project_name.params.project_name_params import get_project_name_paths
 
 
 def test_project_name_paths() -> None:
