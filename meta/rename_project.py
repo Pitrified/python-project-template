@@ -44,29 +44,28 @@ class Rename:
     def __init__(self) -> None:
         """Initialize the Rename class."""
         self.get_inputs()
-        self.build_name_map()
         self.build_roots()
         self.build_cred_fp()
 
     def get_inputs(self) -> None:
         """Get the new project and repo names."""
-        self.new_name = input("Enter the new project_name: ")
-        repo_prompt = f"Enter the new repo-name [{self.new_name}]: "
-        self.repo_name = input(repo_prompt) or self.new_name
-
-    def build_name_map(self) -> None:
-        """Build the capitalized name."""
-        pieces = self.new_name.split("_")
+        new_name = input("Enter the new project_name: ")
+        pieces = new_name.split("_")
         kebab_case = "-".join(pieces)
         camel_case = "".join([p.capitalize() for p in pieces])
         pretty = " ".join(pieces).capitalize()
+
+        # repo name should be kebab-case as when it is cloned from GitHub
+        repo_prompt = f"Enter the new repo-name [{kebab_case}]: "
+        repo_name = input(repo_prompt) or kebab_case
+
         self.name_map = {
-            "project_name": self.new_name,
-            "PROJECT_NAME": self.new_name.upper(),
+            "project_name": new_name,
+            "PROJECT_NAME": new_name.upper(),
             "project-name": kebab_case,
             "ProjectName": camel_case,
             "Project name": pretty,
-            "python_project_template": self.repo_name,
+            "python-project-template": repo_name,
         }
         print("Name map:")
         pp(self.name_map, sort_dicts=False)
@@ -75,13 +74,13 @@ class Rename:
         """Build the roots of the old and new projects."""
         self.old_root_fol = Path(__file__).parents[1].resolve()
         self.new_root_fol = (
-            self.old_root_fol.parent / self.name_map["python_project_template"]
+            self.old_root_fol.parent / self.name_map["python-project-template"]
         )
         print(f"Will init the project in {self.new_root_fol}")
 
     def build_cred_fp(self) -> None:
         """Build the credentials file path."""
-        new_repo_name = self.name_map["python_project_template"]
+        new_repo_name = self.name_map["python-project-template"]
         self.cred_fp = Path.home() / "cred" / new_repo_name / ".env"
 
     def check_inputs(self) -> bool:
