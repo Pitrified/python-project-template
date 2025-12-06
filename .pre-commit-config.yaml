@@ -16,8 +16,8 @@ repos:
     hooks:
       - id: uv-lock
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    # ruff version
-    rev: v0.9.6
+    # uv ruff --version
+    rev: v0.14.8
     hooks:
       # run the linter
       - id: ruff
@@ -25,11 +25,12 @@ repos:
       # run the formatter
       - id: ruff-format
   - repo: https://github.com/RobertCraigie/pyright-python
-    # pyright-python version
-    rev: v1.1.394
+    # uv pyright --version
+    rev: v1.1.407
     hooks:
       - id: pyright
   - repo: https://github.com/Yelp/detect-secrets
+    # use the ref you want to point at
     rev: v1.5.0
     hooks:
       - id: detect-secrets
