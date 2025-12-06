@@ -3,7 +3,7 @@
 from loguru import logger as lg
 
 from project_name.config.project_name_paths import ProjectNamePaths
-from project_name.config.singleton import Singleton
+from project_name.metaclasses.singleton import Singleton
 
 
 class ProjectNameConfig(metaclass=Singleton):
