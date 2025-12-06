@@ -39,4 +39,4 @@ class ProjectNamePaths:
         s += f" cache_fol: {self.cache_fol}\n"
         s += f"  data_fol: {self.data_fol}\n"
         s += f"static_fol: {self.static_fol}\n"
-        return s
+        return s.rstrip()
