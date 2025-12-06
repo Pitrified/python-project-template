@@ -29,6 +29,12 @@ repos:
     rev: v1.1.407
     hooks:
       - id: pyright
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.8.2
+    hooks:
+      - id: nbstripout
+        name: Check for Jupyter notebook output
+        args: [--verify]
   - repo: https://github.com/Yelp/detect-secrets
     # use the ref you want to point at
     rev: v1.5.0
