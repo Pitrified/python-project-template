@@ -13,9 +13,6 @@ data/
 # ide
 .vscode/
 
-# project template meta files
-README_FINAL.md
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
