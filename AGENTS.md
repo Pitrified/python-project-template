@@ -26,12 +26,12 @@ Python 3.13+ · Haystack 2.x · OpenAI · Loguru · Rich · Pytest · Ruff · Py
 
 ## Scripts
 
-(Always activate venv: `source .venv/bin/activate`)
+(Use `uv run` to execute commands in the environment)
 
-- Test: `pytest`
-- Lint: `ruff check .`
-- Format: `ruff format .`
-- Type Check: `pyright`
+- Test: `uv run pytest`
+- Lint: `uv run ruff check .`
+- Format: `uv run ruff format .`
+- Type Check: `uv run pyright`
   (Extend with test/docs scripts as they are added.)
 
 ## Adding a New Agent

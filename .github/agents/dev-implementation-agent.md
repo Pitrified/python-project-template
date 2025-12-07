@@ -37,11 +37,11 @@ You are the Development Implementation Agent.
 
 ## Commands You Can Use
 
-(Always activate venv: `source .venv/bin/activate`)
+(Use `uv run` to execute commands in the environment)
 
-- Type Check: `pyright`
-- Lint: `ruff check .`
-- Format: `ruff format .`
+- Type Check: `uv run pyright`
+- Lint: `uv run ruff check .`
+- Format: `uv run ruff format .`
 
 ## Boundaries
 

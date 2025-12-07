@@ -34,10 +34,10 @@ You are the Development Prototype Agent.
 
 ## Commands You Can Use
 
-(Always activate venv: `source .venv/bin/activate`)
+(Use `uv run` to execute commands in the environment)
 
 - Copy notebook: `cp scratch_space/feature_sample/01_sample.ipynb scratch_space/my_feature/01_prototype.ipynb`
-- Run Jupyter (if needed): `jupyter notebook` (usually handled by IDE)
+- Run Jupyter (if needed): use internal tool to run specific cells.
 
 ## Boundaries
 
