@@ -1405,6 +1405,9 @@ dependencies = [
 ]
 
 [package.dev-dependencies]
+cli = [
+    { name = "typer" },
+]
 dev = [
     { name = "detect-secrets" },
     { name = "ipykernel" },
@@ -1417,6 +1420,7 @@ dev = [
     { name = "rich" },
     { name = "ruff" },
     { name = "tqdm" },
+    { name = "typer" },
 ]
 lint = [
     { name = "detect-secrets" },
@@ -1448,6 +1452,7 @@ requires-dist = [
 ]
 
 [package.metadata.requires-dev]
+cli = [{ name = "typer", specifier = ">=0.20.0" }]
 dev = [
     { name = "detect-secrets", specifier = ">=1.5.0" },
     { name = "ipykernel", specifier = ">=6.29.5" },
@@ -1460,6 +1465,7 @@ dev = [
     { name = "rich", specifier = ">=13.9.4" },
     { name = "ruff", specifier = ">=0.9.6" },
     { name = "tqdm", specifier = ">=4.67.1" },
+    { name = "typer", specifier = ">=0.20.0" },
 ]
 lint = [
     { name = "detect-secrets", specifier = ">=1.5.0" },
