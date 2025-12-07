@@ -8,9 +8,13 @@
 
 from collections.abc import Generator
 from pathlib import Path
-from pprint import pprint as pp
 import shutil
-from typing import Any
+from typing import Annotated
+
+from rich import print as rprint
+import typer
+
+app = typer.Typer()
 
 
 def replace_in_str(s: str, name_map: dict[str, str]) -> str:
@@ -20,7 +24,7 @@ def replace_in_str(s: str, name_map: dict[str, str]) -> str:
     return s
 
 
-def rglobber(fol: Path, skip_fols: list[str]) -> Generator[Path, Any]:
+def rglobber(fol: Path, skip_fols: list[str]) -> Generator[Path]:
     """Recursively glob files, skipping directories."""
     for item in sorted(fol.iterdir()):
         if item.is_dir() and item.name in skip_fols:
@@ -41,67 +45,69 @@ def update_file_content(fp: Path, name_map: dict[str, str]) -> None:
 class Rename:
     """Class to rename a project."""
 
-    def __init__(self) -> None:
+    def __init__(self, project_name: str, repo_name: str | None) -> None:
         """Initialize the Rename class."""
-        self.get_inputs()
+        self.project_name = project_name
+        self.repo_name = repo_name
+        self.build_name_map()
         self.build_roots()
         self.build_cred_fp()
 
-    def get_inputs(self) -> None:
-        """Get the new project and repo names."""
-        new_name = input("Enter the new project_name: ")
-        pieces = new_name.split("_")
+    def build_name_map(self) -> None:
+        """Build the name map."""
+        pieces = self.project_name.split("_")
         kebab_case = "-".join(pieces)
         camel_case = "".join([p.capitalize() for p in pieces])
         pretty = " ".join(pieces).capitalize()
 
-        # repo name should be kebab-case as when it is cloned from GitHub
-        repo_prompt = f"Enter the new repo-name [{kebab_case}]: "
-        repo_name = input(repo_prompt) or kebab_case
+        if self.repo_name is None:
+            self.repo_name = kebab_case
 
         self.name_map = {
-            "project_name": new_name,
-            "PROJECT_NAME": new_name.upper(),
+            "project_name": self.project_name,
+            "PROJECT_NAME": self.project_name.upper(),
             "project-name": kebab_case,
             "ProjectName": camel_case,
             "Project name": pretty,
-            "python-project-template": repo_name,
+            "python-project-template": self.repo_name,
         }
-        print("Name map:")
-        pp(self.name_map, sort_dicts=False)
+        rprint("[bold]Name map:[/bold]")
+        rprint(self.name_map)
 
     def build_roots(self) -> None:
         """Build the roots of the old and new projects."""
         self.old_root_fol = Path(__file__).parents[1].resolve()
-        self.new_root_fol = (
-            self.old_root_fol.parent / self.name_map["python-project-template"]
-        )
-        print(f"Will init the project in {self.new_root_fol}")
+        # self.repo_name is guaranteed to be set by build_name_map
+        if self.repo_name is None:
+            msg = "repo_name not set"
+            raise ValueError(msg)
+        self.new_root_fol = self.old_root_fol.parent / self.repo_name
+        rprint(f"Will init the project in [green]{self.new_root_fol}[/green]")
 
     def build_cred_fp(self) -> None:
         """Build the credentials file path."""
-        new_repo_name = self.name_map["python-project-template"]
-        self.cred_fp = Path.home() / "cred" / new_repo_name / ".env"
+        # self.repo_name is guaranteed to be set by build_name_map
+        if self.repo_name is None:
+            msg = "repo_name not set"
+            raise ValueError(msg)
+        self.cred_fp = Path.home() / "cred" / self.repo_name / ".env"
 
-    def check_inputs(self) -> bool:
+    def check_inputs(self) -> None:
         """Check that the project name is correct and not already in use."""
-        # check that the new project name is correct
-        print("Is the above information correct?")
-        valid = input("Continue? ([y]/n) ")
-        if not (valid == "" or valid.lower() == "y"):
-            print("Error: Wrong information.")
-            return False
-        # check that the new project name is not already in use
         if self.new_root_fol.exists():
-            print(f"Error: {self.new_root_fol} already exists.")
-            return False
+            rprint(f"[red]Error: {self.new_root_fol} already exists.[/red]")
+            raise typer.Exit(code=1)
         if self.cred_fp.exists():
-            print(f"Error: {self.cred_fp} already exists.")
-            return False
-        return True
+            rprint(f"[red]Error: {self.cred_fp} already exists.[/red]")
+            raise typer.Exit(code=1)
+
+        if not typer.confirm("Is the above information correct?"):
+            rprint("Exiting.")
+            raise typer.Exit
 
     def copy_files(self) -> None:
         """Copy files to the new project name."""
+        rprint("Copying files...")
         # skip these directories
         skip_fols = [
             "__pycache__",
@@ -123,6 +129,7 @@ class Rename:
             "README_FINAL.md": "README.md",
             "meta/README.md": "README_POST_CREATE.md",
         }
+
         for old_fp in rglobber(self.old_root_fol, skip_fols):
             # get the portion of the source path relative to the root
             old_relative_portion = old_fp.relative_to(self.old_root_fol)
@@ -151,26 +158,45 @@ class Rename:
 
     def update_files(self) -> None:
         """Update the contents of the files."""
+        rprint("Updating files...")
         for new_fp in rglobber(self.new_root_fol, []):
             update_file_content(new_fp, self.name_map)
 
     def create_cred_file(self) -> None:
         """Create the credentials file."""
+        rprint("Creating credentials file...")
         self.cred_fp.parent.mkdir(parents=True, exist_ok=True)
         sample_cred = f"{self.name_map['PROJECT_NAME']}_SAMPLE_ENV_VAR=sample"
         self.cred_fp.write_text(sample_cred)
 
-    def main(self) -> None:
-        """Run main method to execute the renaming process."""
-        if not self.check_inputs():
-            print("Exiting.")
-            return
+    def run(self) -> None:
+        """Run the renaming process."""
+        self.check_inputs()
         self.copy_files()
         self.update_files()
         self.create_cred_file()
-        print("Done.")
+        rprint("[bold green]Done.[/bold green]")
+
+
+@app.command()
+def main(
+    project_name: Annotated[
+        str, typer.Argument(help="The new project name (e.g. my_new_project)")
+    ],
+    repo_name: Annotated[
+        str | None,
+        typer.Option(
+            help=(
+                "The new repository name (e.g. my-new-project). "
+                "Defaults to kebab-case of project_name."
+            )
+        ),
+    ] = None,
+) -> None:
+    """Rename the project template to a new project name."""
+    rename = Rename(project_name, repo_name)
+    rename.run()
 
 
 if __name__ == "__main__":
-    r = Rename()
-    r.main()
+    app()

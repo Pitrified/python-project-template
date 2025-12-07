@@ -8,12 +8,24 @@ Clone the `python-project-template` repo.
 git clone git@github.com:Pitrified/python-project-template.git
 ```
 
-From outside the repo, run the
-[rename_project.py](meta/rename_project.py)
-script to rename the project.
+Enter the repo folder:
 
 ```bash
-python python-project-template/meta/rename_project.py
+cd python-project-template
+```
+
+Install the dependencies (including the ones needed for the renaming script):
+
+```bash
+uv sync --group dev
+```
+
+Run the [rename_project.py](meta/rename_project.py) script to rename the project.
+This will create a new folder next to the current one (sibling directory).
+
+```bash
+# Syntax: uv run meta/rename_project.py <project_name> [--repo-name <repo-name>]
+uv run meta/rename_project.py my_new_project
 ```
 
 By this point, the project is already set up with the new name.
@@ -23,7 +35,7 @@ with the name of the project updated.
 Go to the new folder:
 
 ```bash
-cd project_name
+cd ../python-project-template
 ```
 
 Install the project:
