@@ -24,8 +24,8 @@ Run the [rename_project.py](meta/rename_project.py) script to rename the project
 This will create a new folder next to the current one (sibling directory).
 
 ```bash
-# Syntax: uv run meta/rename_project.py <project_name> [--repo-name <repo-name>]
-uv run meta/rename_project.py my_new_project
+# Syntax: uv run rename-project <project_name> [--repo-name <repo-name>]
+uv run rename-project my_new_project
 ```
 
 By this point, the project is already set up with the new name.

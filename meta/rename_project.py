@@ -162,6 +162,33 @@ class Rename:
         for new_fp in rglobber(self.new_root_fol, []):
             update_file_content(new_fp, self.name_map)
 
+    def cleanup_pyproject_toml(self) -> None:
+        """Remove the rename script configuration from pyproject.toml."""
+        rprint("Cleaning up pyproject.toml...")
+        pyproject_fp = self.new_root_fol / "pyproject.toml"
+        content = pyproject_fp.read_text()
+
+        # Remove [project.scripts] block
+        scripts_block = (
+            '[project.scripts]\nrename-project = "meta.rename_project:app"\n'
+        )
+        content = content.replace(scripts_block, "")
+
+        # Remove [tool.hatch.build.targets.wheel] block
+        # The package name has been updated by update_files()
+        new_project_name = self.name_map["project_name"]
+        wheel_block = (
+            f"[tool.hatch.build.targets.wheel]\n"
+            f'packages = ["src/{new_project_name}", "meta"]\n'
+        )
+        content = content.replace(wheel_block, "")
+
+        # Clean up extra newlines
+        while "\n\n\n" in content:
+            content = content.replace("\n\n\n", "\n\n")
+
+        pyproject_fp.write_text(content)
+
     def create_cred_file(self) -> None:
         """Create the credentials file."""
         rprint("Creating credentials file...")
@@ -174,6 +201,7 @@ class Rename:
         self.check_inputs()
         self.copy_files()
         self.update_files()
+        self.cleanup_pyproject_toml()
         self.create_cred_file()
         rprint("[bold green]Done.[/bold green]")
 
