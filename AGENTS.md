@@ -6,7 +6,9 @@ This repository uses specialized agents defined in `.github/agents/` to improve 
 
 - `@meta_agent` – Maintains agent definitions and ensures adherence to six core areas.
 - `@docs_agent` – Generates and updates developer documentation in `docs/`.
-- `@dev_agent` – Scaffolds features, plans implementation, and prototypes in `scratch_space/`.
+- `@dev_plan_agent` – Plans features, manages branches, and creates README strategies.
+- `@dev_prototype_agent` – Creates and validates experimental notebooks in `scratch_space/`.
+- `@dev_implementation_agent` – Ports validated logic to `src/` and creates usage samples.
 - `@test_agent` – Generates and maintains test coverage (writes to `tests/`).
 
 ## Six Core Areas (Applied to Every Agent)
