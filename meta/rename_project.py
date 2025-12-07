@@ -126,7 +126,7 @@ class Rename:
         ]
         # special cases to rename
         special_portions = {
-            "README_FINAL.md": "README.md",
+            "final_resources/README.md": "README.md",
             "meta/README.md": "README_POST_CREATE.md",
         }
 
