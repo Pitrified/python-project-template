@@ -28,6 +28,12 @@ Town crier integration.
 
 Release management with semantic versioning.
 
+Move the entire package in a `template` subfolder.
+That is the real package that will be copied and renamed.
+Only leave renamer related things here.
+Maybe some ruff/precommit configs can be shared.
+The internal package can be installed by going in the `template` folder and treating it as a separate folder.
+
 ## TODOs
 
 ### Write a script to initialize the project (renamer)
