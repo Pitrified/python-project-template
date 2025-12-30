@@ -45,10 +45,16 @@ def update_file_content(fp: Path, name_map: dict[str, str]) -> None:
 class Rename:
     """Class to rename a project."""
 
-    def __init__(self, project_name: str, repo_name: str | None) -> None:
+    def __init__(
+        self,
+        project_name: str,
+        repo_name: str | None,
+        github_username: str | None,
+    ) -> None:
         """Initialize the Rename class."""
         self.project_name = project_name
         self.repo_name = repo_name
+        self.github_username = github_username
         self.build_name_map()
         self.build_roots()
         self.build_cred_fp()
@@ -68,9 +74,15 @@ class Rename:
             "PROJECT_NAME": self.project_name.upper(),
             "project-name": kebab_case,
             "ProjectName": camel_case,
+            "Project Name": pretty.title(),
             "Project name": pretty,
             "python-project-template": self.repo_name,
         }
+
+        # Add GitHub username mapping if provided
+        if self.github_username is not None:
+            self.name_map["Pitrified"] = self.github_username
+
         rprint("[bold]Name map:[/bold]")
         rprint(self.name_map)
 
@@ -194,9 +206,18 @@ def main(
             )
         ),
     ] = None,
+    github_username: Annotated[
+        str | None,
+        typer.Option(
+            help=(
+                "Your GitHub username for documentation links. "
+                "If not provided, 'Pitrified' will remain in the docs."
+            )
+        ),
+    ] = None,
 ) -> None:
     """Rename the project template to a new project name."""
-    rename = Rename(project_name, repo_name)
+    rename = Rename(project_name, repo_name, github_username)
     rename.run()
 
 

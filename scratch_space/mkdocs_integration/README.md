@@ -57,11 +57,11 @@ Place `mkdocs.yml` at the repository root with `docs/` as the source directory.
 
 ### Phase 7: Template Integration
 
-17. [ ] Update `mkdocs.yml` to use `Pitrified` as the GitHub username (make docs work for this repo)
-18. [ ] Update `meta/rename_project.py` to handle `mkdocs.yml` replacements:
-    - Replace `Pitrified` → new GitHub username
-    - Replace `project-name` → new project name (already handled for other files)
-    - Replace `Project Name` → new project display name
+17. [x] Update `mkdocs.yml` to use `Pitrified` as the GitHub username (make docs work for this repo)
+18. [x] Update `meta/rename_project.py` to handle `mkdocs.yml` replacements:
+    - Replace `Pitrified` → new GitHub username (via `--github-username` option)
+    - Replace `project-name` → new project name (already handled)
+    - Replace `Project Name` → new project display name (already handled)
 
 ---
 
