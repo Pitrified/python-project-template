@@ -55,6 +55,14 @@ Place `mkdocs.yml` at the repository root with `docs/` as the source directory.
 15. [x] Update `.github/agents/docs-agent.md` with MkDocs maintenance tasks
 16. [ ] Add pre-commit hook or CI check for docs build validation (optional)
 
+### Phase 7: Template Integration
+
+17. [ ] Update `mkdocs.yml` to use `Pitrified` as the GitHub username (make docs work for this repo)
+18. [ ] Update `meta/rename_project.py` to handle `mkdocs.yml` replacements:
+    - Replace `Pitrified` → new GitHub username
+    - Replace `project-name` → new project name (already handled for other files)
+    - Replace `Project Name` → new project display name
+
 ---
 
 ## Dependencies to Add
