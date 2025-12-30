@@ -1,9 +1,9 @@
 site_name: Project Name
 site_description: Python project template documentation
-site_url: https://github.com/Pitrified/project-name
+site_url: https://github.com/Pitrified/python-project-template
 
-repo_name: Pitrified/project-name
-repo_url: https://github.com/Pitrified/project-name
+repo_name: Pitrified/python-project-template
+repo_url: https://github.com/Pitrified/python-project-template
 
 theme:
   name: material
@@ -73,4 +73,4 @@ nav:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/Pitrified/project-name
+      link: https://github.com/Pitrified/python-project-template
