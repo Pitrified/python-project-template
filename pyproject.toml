@@ -51,6 +51,11 @@ notebook = [
 cli = [
     "typer>=0.20.0",
 ]
+docs = [
+    "mkdocs>=1.6",
+    "mkdocs-material>=9.5",
+    "mkdocs-api-autonav>=0.2",
+]
 
 [tool.pyright]
 venvPath = "."

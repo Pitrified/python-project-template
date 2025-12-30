@@ -6,6 +6,24 @@ Follow the instructions in the [meta README](meta/README.md) to set up a new pro
 
 Happy coding!
 
+## Documentation
+
+Build and serve the documentation locally:
+
+```bash
+# Install docs dependencies
+uv sync --group docs
+
+# Start local server with hot reload
+uv run mkdocs serve
+
+# Build static site
+uv run mkdocs build
+
+# Deploy to GitHub Pages
+uv run mkdocs gh-deploy
+```
+
 ## IDEAs
 
 Fancier automation with github actions (eg):
@@ -13,8 +31,6 @@ Fancier automation with github actions (eg):
 - https://github.com/rochacbruno/python-project-template
 
 Support codecov.
-
-Support documentation with sphinx or mkdocs.
 
 Automatic dependency updates with [uv-bump](https://github.com/zundertj/uv-bump).
 

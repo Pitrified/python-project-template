@@ -23,36 +23,36 @@ Place `mkdocs.yml` at the repository root with `docs/` as the source directory.
 
 ### Phase 1: Core Setup
 
-1. [ ] Add MkDocs dependencies to `pyproject.toml` (`mkdocs`, `mkdocs-material`, `mkdocs-api-autonav`)
-2. [ ] Create `mkdocs.yml` at repository root
-3. [ ] Configure Material theme with project branding
+1. [x] Add MkDocs dependencies to `pyproject.toml` (`mkdocs`, `mkdocs-material`, `mkdocs-api-autonav`)
+2. [x] Create `mkdocs.yml` at repository root
+3. [x] Configure Material theme with project branding
 
 ### Phase 2: Documentation Structure
 
-4. [ ] Restructure `docs/` folder for MkDocs nav hierarchy
-5. [ ] Migrate existing docs (`pre_commit.md`, `uv.md`) into `docs/guides/`
-6. [ ] Create `docs/index.md` landing page
+4. [x] Restructure `docs/` folder for MkDocs nav hierarchy
+5. [x] Migrate existing docs (`pre_commit.md`, `uv.md`) into `docs/guides/`
+6. [x] Create `docs/index.md` landing page
 
 ### Phase 3: Auto API Documentation
 
-7. [ ] Configure `mkdocs-api-autonav` to scan `src/project_name/`
-8. [ ] Validate generated API docs render correctly
+7. [x] Configure `mkdocs-api-autonav` to scan `src/project_name/`
+8. [x] Validate generated API docs render correctly
 9. [ ] Add docstring examples to key modules for demo
 
 ### Phase 4: Build & Serve
 
-10. [ ] Add `uv run mkdocs serve` and `uv run mkdocs build` scripts/instructions
-11. [ ] Update project `README.md` with docs build instructions
-12. [ ] Update `.gitignore` to exclude `site/` build output
+10. [x] Add `uv run mkdocs serve` and `uv run mkdocs build` scripts/instructions
+11. [x] Update project `README.md` with docs build instructions
+12. [x] Update `.gitignore` to exclude `site/` build output
 
 ### Phase 5: Deployment
 
-13. [ ] Create GitHub Actions workflow for GitHub Pages deployment
-14. [ ] Document manual deployment steps as fallback
+13. [x] Create GitHub Actions workflow for GitHub Pages deployment
+14. [x] Document manual deployment steps as fallback
 
 ### Phase 6: Agent & Maintenance
 
-15. [ ] Update `.github/agents/docs-agent.md` with MkDocs maintenance tasks
+15. [x] Update `.github/agents/docs-agent.md` with MkDocs maintenance tasks
 16. [ ] Add pre-commit hook or CI check for docs build validation (optional)
 
 ---
