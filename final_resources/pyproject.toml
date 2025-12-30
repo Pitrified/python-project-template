@@ -23,9 +23,10 @@ packages = ["src/project_name"]
 
 [dependency-groups]
 dev = [
-    { include-group = "test" },
+    { include-group = "docs" },
     { include-group = "lint" },
     { include-group = "notebook" },
+    { include-group = "test" },
 ]
 test = [
     "pytest>=8.3.4",
@@ -43,6 +44,11 @@ notebook = [
     "nbstripout>=0.8.2",
     "rich>=13.9.4",
     "tqdm>=4.67.1",
+]
+docs = [
+    "mkdocs>=1.6",
+    "mkdocs-material>=9.5",
+    "mkdocs-api-autonav>=0.2",
 ]
 
 [tool.pyright]

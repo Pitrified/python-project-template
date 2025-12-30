@@ -26,10 +26,11 @@ packages = ["src/project_name", "meta"]
 
 [dependency-groups]
 dev = [
-    { include-group = "test" },
+    { include-group = "cli" },
+    { include-group = "docs" },
     { include-group = "lint" },
     { include-group = "notebook" },
-    { include-group = "cli" },
+    { include-group = "test" },
 ]
 test = [
     "pytest>=8.3.4",

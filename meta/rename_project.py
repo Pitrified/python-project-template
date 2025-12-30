@@ -128,6 +128,7 @@ class Rename:
             ".git",
             ".venv",
             # "meta",
+            "site",
         ]
         # skip these files
         skip_portions = [
