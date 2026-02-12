@@ -3,6 +3,9 @@
 from pathlib import Path
 
 import project_name
+from project_name.params.env_type import EnvLocationType
+from project_name.params.env_type import EnvType
+from project_name.params.env_type import UnknownEnvLocationError
 
 
 class ProjectNamePaths:
@@ -10,13 +13,22 @@ class ProjectNamePaths:
 
     def __init__(
         self,
+        env_type: EnvType,
     ) -> None:
         """Load the config for data folders."""
+        self.env_type = env_type
         self.load_config()
 
     def load_config(self) -> None:
         """Load the config for data folders."""
         self.load_common_config_pre()
+        match self.env_type.location:
+            case EnvLocationType.LOCAL:
+                self.load_local_config()
+            case EnvLocationType.RENDER:
+                self.load_render_config()
+            case _:
+                raise UnknownEnvLocationError(self.env_type.location)
 
     def load_common_config_pre(self) -> None:
         """Pre load the common config."""
@@ -30,6 +42,12 @@ class ProjectNamePaths:
         self.data_fol = self.root_fol / "data"
         # static
         self.static_fol = self.root_fol / "static"
+
+    def load_local_config(self) -> None:
+        """Load the config for local environment."""
+
+    def load_render_config(self) -> None:
+        """Load the config for Render environment."""
 
     def __str__(self) -> str:
         """Return the string representation of the object."""
