@@ -14,6 +14,7 @@ from project_name.metaclasses.singleton import Singleton
 from project_name.params.env_type import EnvType
 from project_name.params.project_name_paths import ProjectNamePaths
 from project_name.params.sample_params import SampleParams
+from project_name.params.webapp import WebappParams
 
 
 class ProjectNameParams(metaclass=Singleton):
@@ -42,12 +43,17 @@ class ProjectNameParams(metaclass=Singleton):
         """Load the project_name configuration."""
         self.paths = ProjectNamePaths(env_type=self.env_type)
         self.sample = SampleParams()
+        self.webapp = WebappParams(
+            stage=self.env_type.stage,
+            location=self.env_type.location,
+        )
 
     def __str__(self) -> str:
         """Return the string representation of the object."""
         s = "ProjectNameParams:"
         s += f"\n{self.paths}"
         s += f"\n{self.sample}"
+        s += f"\n{self.webapp}"
         return s
 
     def __repr__(self) -> str:
@@ -63,3 +69,8 @@ def get_project_name_params() -> ProjectNameParams:
 def get_project_name_paths() -> ProjectNamePaths:
     """Get the project_name paths."""
     return get_project_name_params().paths
+
+
+def get_webapp_params() -> WebappParams:
+    """Get the webapp params."""
+    return get_project_name_params().webapp
