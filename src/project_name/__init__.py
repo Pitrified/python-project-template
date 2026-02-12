@@ -1,10 +1,5 @@
 """project_name package."""
 
-from pathlib import Path
+from project_name.params.load_env import load_env
 
-from dotenv import load_dotenv
-
-# standard place to store credentials outside of version control and folder
-cred_path = Path.home() / "cred" / "python-project-template" / ".env"
-if cred_path.exists():
-    load_dotenv(dotenv_path=cred_path)
+load_env()
