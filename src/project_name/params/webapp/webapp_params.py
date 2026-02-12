@@ -48,11 +48,11 @@ class WebappParams:
         self.app_name: str = os.getenv("WEBAPP_APP_NAME", "Project Name API")
         self.app_version: str = os.getenv("WEBAPP_APP_VERSION", "0.1.0")
 
-        # Session settings
-        self.session_secret_key: str = os.getenv(
-            "SESSION_SECRET_KEY",
-            self._generate_dev_secret() if self.stage == EnvStageType.DEV else "",
-        )
+        # Session settings - avoid eager evaluation of _generate_dev_secret()
+        self.session_secret_key: str = os.getenv("SESSION_SECRET_KEY", "")
+        if not self.session_secret_key and self.stage == EnvStageType.DEV:
+            self.session_secret_key = self._generate_dev_secret()
+
         self.session_cookie_name: str = os.getenv("SESSION_COOKIE_NAME", "session")
         self.session_max_age: int = int(os.getenv("SESSION_MAX_AGE", "86400"))
         self.session_same_site: str = os.getenv("SESSION_SAME_SITE", "lax")
@@ -75,9 +75,9 @@ class WebappParams:
         # Google OAuth settings
         self.google_client_id: str = os.getenv("GOOGLE_CLIENT_ID", "")
         self.google_client_secret: str = os.getenv("GOOGLE_CLIENT_SECRET", "")
-        self.google_redirect_uri: str = os.getenv(
-            "GOOGLE_REDIRECT_URI",
-            self._get_default_redirect_uri(),
+        # Avoid eager evaluation of _get_default_redirect_uri()
+        self.google_redirect_uri: str = (
+            os.getenv("GOOGLE_REDIRECT_URI") or self._get_default_redirect_uri()
         )
 
         # Apply environment-specific overrides
