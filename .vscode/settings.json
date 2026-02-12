@@ -1,8 +1,10 @@
 {
     "python.envFile": "/home/pmn/cred/python-project-template/.env",
     "cSpell.words": [
+        "dotenv",
         "ipynb",
         "isort",
+        "metaclasses",
         "pylint"
     ],
     "python.testing.pytestArgs": [
