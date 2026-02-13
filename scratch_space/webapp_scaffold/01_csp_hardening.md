@@ -164,3 +164,5 @@ If this service is externally exposed, the best near-term move is:
 - **Option A now** (route-specific CSP), then
 - **Option B later** (self-host docs assets), or
 - **Option C** for highly sensitive environments.
+
+DECISION: option b+c, no need to allow external assets for docs in production. We can self-host the docs assets and remove the `'unsafe-inline'` allowances, which will significantly reduce the attack surface while still providing interactive documentation for internal use.
