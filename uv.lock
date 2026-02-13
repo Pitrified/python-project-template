@@ -1676,6 +1676,7 @@ webapp = [
     { name = "fastapi" },
     { name = "httpx" },
     { name = "itsdangerous" },
+    { name = "jinja2" },
     { name = "python-multipart" },
     { name = "uvicorn", extra = ["standard"] },
 ]
@@ -1733,6 +1734,7 @@ requires-dist = [
     { name = "haystack-ai", specifier = ">=2.10.0" },
     { name = "httpx", marker = "extra == 'webapp'", specifier = ">=0.26.0" },
     { name = "itsdangerous", marker = "extra == 'webapp'", specifier = ">=2.1.0" },
+    { name = "jinja2", marker = "extra == 'webapp'", specifier = ">=3.1.0" },
     { name = "loguru", specifier = ">=0.7.3" },
     { name = "ollama-haystack", specifier = ">=2.3.0" },
     { name = "openai", specifier = ">=1.63.0" },

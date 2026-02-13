@@ -5,12 +5,15 @@ Creates and configures the FastAPI application instance.
 
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi import Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from fastapi.responses import RedirectResponse
 from loguru import logger as lg
+from starlette.staticfiles import StaticFiles
 
 from project_name.config.webapp import WebappConfig
 from project_name.params.project_name_params import get_webapp_params
@@ -19,8 +22,10 @@ from project_name.webapp.core.exceptions import NotAuthenticatedException
 from project_name.webapp.core.exceptions import NotAuthorizedException
 from project_name.webapp.core.exceptions import RateLimitExceededException
 from project_name.webapp.core.middleware import setup_middleware
+from project_name.webapp.core.templating import configure_templates
 from project_name.webapp.routers import auth_router
 from project_name.webapp.routers import health_router
+from project_name.webapp.routers import pages_router
 from project_name.webapp.schemas.common_schemas import ErrorResponse
 from project_name.webapp.services.auth_service import GoogleAuthService
 from project_name.webapp.services.auth_service import SessionStore
@@ -96,6 +101,13 @@ def create_app(config: WebappConfig | None = None) -> FastAPI:
     # Store config in app state
     app.state.config = config
 
+    # Configure Jinja2 template globals
+    configure_templates(config)
+
+    # Mount static assets (before routers so /static/… is resolved first)
+    static_dir = Path(__file__).resolve().parent / "static"
+    app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
+
     # Setup CORS middleware
     app.add_middleware(
         CORSMiddleware,
@@ -112,6 +124,7 @@ def create_app(config: WebappConfig | None = None) -> FastAPI:
     register_exception_handlers(app)
 
     # Include routers
+    app.include_router(pages_router)
     app.include_router(health_router)
     app.include_router(auth_router)
     app.include_router(api_router)
@@ -132,8 +145,17 @@ def register_exception_handlers(app: FastAPI) -> None:
     async def not_authenticated_handler(
         request: Request,
         exc: NotAuthenticatedException,
-    ) -> JSONResponse:
-        """Handle authentication errors."""
+    ) -> JSONResponse | RedirectResponse:
+        """Handle authentication errors.
+
+        Browser requests are redirected to the landing page.
+        API requests receive a JSON 401 response.
+        """
+        # Browser/HTMX callers get a redirect to login
+        accept = request.headers.get("accept", "")
+        if "text/html" in accept:
+            return RedirectResponse(url="/", status_code=302)
+
         request_id = getattr(request.state, "request_id", None)
         return JSONResponse(
             status_code=exc.status_code,

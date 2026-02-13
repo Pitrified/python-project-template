@@ -101,8 +101,7 @@ async def google_callback(
         settings = get_settings()
 
         # Create redirect response
-        redirect_url = "/"  # TODO: Make this configurable
-        redirect_response = RedirectResponse(url=redirect_url, status_code=302)
+        redirect_response = RedirectResponse(url="/dashboard", status_code=302)
 
         # Set session cookie
         redirect_response.set_cookie(
@@ -126,39 +125,62 @@ async def google_callback(
 
 @router.post(
     "/logout",
+    response_model=None,
     summary="Logout",
     description="Invalidates the current session and clears the session cookie.",
 )
 async def logout(
-    response: Response,
+    request: Request,
     session: Annotated[SessionData, Depends(get_current_user)],
     auth_service: Annotated[GoogleAuthService, Depends(get_auth_service)],
-) -> LogoutResponse:
+) -> LogoutResponse | RedirectResponse:
     """Logout current user.
 
+    For browser requests returns a redirect to landing page.
+    For HTMX requests returns an HX-Redirect header.
+    For API requests returns JSON.
+
     Args:
-        response: FastAPI response.
+        request: Incoming request.
         session: Current session data.
         auth_service: Authentication service.
 
     Returns:
-        LogoutResponse confirming logout.
+        LogoutResponse, or a redirect for browser/HTMX callers.
     """
     # Revoke session
     auth_service.revoke_session(session.session_id)
-
-    # Clear session cookie
-    settings = get_settings()
-    response.delete_cookie(
-        key=settings.session.session_cookie_name,
-        httponly=True,
-        secure=settings.session.https_only,
-        samesite=settings.session.same_site,
-    )
-
     lg.info(f"User {session.email} logged out")
 
-    return LogoutResponse()
+    settings = get_settings()
+    cookie_kwargs = {
+        "key": settings.session.session_cookie_name,
+        "httponly": True,
+        "secure": settings.session.https_only,
+        "samesite": settings.session.same_site,
+    }
+
+    # HTMX requests: return 200 with HX-Redirect header
+    if request.headers.get("HX-Request") == "true":
+        response = Response(status_code=200)
+        response.delete_cookie(**cookie_kwargs)
+        response.headers["HX-Redirect"] = "/"
+        return response  # type: ignore[return-value]
+
+    # Browser requests (Accept: text/html)
+    accept = request.headers.get("accept", "")
+    if "text/html" in accept:
+        redirect_resp = RedirectResponse(url="/", status_code=302)
+        redirect_resp.delete_cookie(**cookie_kwargs)
+        return redirect_resp
+
+    # API / JSON requests
+    response = Response(
+        content=LogoutResponse().model_dump_json(),
+        media_type="application/json",
+    )
+    response.delete_cookie(**cookie_kwargs)
+    return response  # type: ignore[return-value]
 
 
 @router.get(

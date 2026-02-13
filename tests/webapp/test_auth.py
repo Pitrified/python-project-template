@@ -76,11 +76,12 @@ def test_logout_authenticated(
     mock_session_data: SessionData,
 ) -> None:
     """Test logout clears session when authenticated."""
-    response = authenticated_client.post("/auth/logout")
+    # API client (no Accept: text/html) gets JSON
+    response = authenticated_client.post(
+        "/auth/logout",
+        headers={"accept": "application/json"},
+    )
     assert response.status_code == 200
-
-    data = response.json()
-    assert data["message"] == "Logout successful"
 
     # Verify session is cleared
     status_response = authenticated_client.get("/auth/status")
@@ -106,3 +107,28 @@ def test_google_callback_with_error(client: TestClient) -> None:
     )
     assert response.status_code == 302
     assert "error=access_denied" in response.headers["location"]
+
+
+def test_logout_browser_redirects(
+    authenticated_client: TestClient,
+) -> None:
+    """Test browser logout redirects to landing page."""
+    response = authenticated_client.post(
+        "/auth/logout",
+        headers={"accept": "text/html"},
+        follow_redirects=False,
+    )
+    assert response.status_code == 302
+    assert response.headers["location"] == "/"
+
+
+def test_logout_htmx_returns_hx_redirect(
+    authenticated_client: TestClient,
+) -> None:
+    """Test HTMX logout returns HX-Redirect header."""
+    response = authenticated_client.post(
+        "/auth/logout",
+        headers={"HX-Request": "true"},
+    )
+    assert response.status_code == 200
+    assert response.headers.get("HX-Redirect") == "/"

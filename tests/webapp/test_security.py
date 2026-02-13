@@ -1,4 +1,4 @@
-"""Tests for security headers and CSRF protection."""
+"""Tests for security headers, CSP route-splitting, and CSRF protection."""
 
 from fastapi.testclient import TestClient
 
@@ -62,3 +62,48 @@ def test_no_hsts_in_debug_mode(client: TestClient) -> None:
     # In debug mode, HSTS should not be set
     # (our test config has debug=True)
     assert "strict-transport-security" not in response.headers
+
+
+# ── CSP route-splitting tests ──────────────────────────────────────
+
+
+def test_strict_csp_on_app_pages(client: TestClient) -> None:
+    """App/UI pages use strict CSP (no CDN, no unsafe-inline for scripts)."""
+    response = client.get("/")
+    csp = response.headers["content-security-policy"]
+
+    assert "cdn.jsdelivr.net" not in csp
+    # script-src must NOT have 'unsafe-inline'
+    assert "script-src 'self'" in csp
+    assert "script-src 'self' 'unsafe-inline'" not in csp
+    # style-src allows 'unsafe-inline' (required by HTMX swap transitions)
+    assert "style-src 'self' 'unsafe-inline'" in csp
+    # Google profile images allowed
+    assert "lh3.googleusercontent.com" in csp
+
+
+def test_strict_csp_on_api_routes(client: TestClient) -> None:
+    """API routes also get the strict CSP (no CDN)."""
+    response = client.get("/health")
+    csp = response.headers["content-security-policy"]
+
+    assert "cdn.jsdelivr.net" not in csp
+    assert "script-src 'self' 'unsafe-inline'" not in csp
+
+
+def test_relaxed_csp_on_docs(client: TestClient) -> None:
+    """The /docs route gets the relaxed CSP with CDN allowances."""
+    response = client.get("/docs", follow_redirects=False)
+    # /docs returns 200 in debug mode (our test config has debug=True)
+    if response.status_code == 200:
+        csp = response.headers["content-security-policy"]
+        assert "'unsafe-inline'" in csp
+        assert "cdn.jsdelivr.net" in csp
+
+
+def test_relaxed_csp_on_openapi_json(client: TestClient) -> None:
+    """The /openapi.json route gets the relaxed CSP."""
+    response = client.get("/openapi.json")
+    if response.status_code == 200:
+        csp = response.headers["content-security-policy"]
+        assert "'unsafe-inline'" in csp

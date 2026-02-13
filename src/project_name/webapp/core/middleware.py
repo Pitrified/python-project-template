@@ -40,7 +40,14 @@ class RequestIDMiddleware(BaseHTTPMiddleware):
 
 
 class SecurityHeadersMiddleware(BaseHTTPMiddleware):
-    """Middleware to add security headers to all responses."""
+    """Middleware to add security headers to all responses.
+
+    Implements CSP route-splitting: strict policy for app pages,
+    relaxed policy for ``/docs`` and ``/redoc`` (Swagger UI).
+    """
+
+    # Paths that require the relaxed (Swagger UI) CSP
+    _DOCS_PREFIXES = ("/docs", "/redoc", "/openapi.json")
 
     def __init__(self, app: ASGIApp, *, is_production: bool = False) -> None:
         """Initialize middleware.
@@ -51,6 +58,49 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
         """
         super().__init__(app)
         self.is_production = is_production
+
+        # ── Strict CSP (app / UI pages) ──────────────────────
+        # style-src needs 'unsafe-inline' because HTMX applies inline
+        # styles during swap/settle transitions (opacity, display).
+        # img-src allows Google profile pictures (lh3.googleusercontent.com).
+        self.strict_csp = (
+            "default-src 'self'"
+            "; script-src 'self'"
+            "; style-src 'self' 'unsafe-inline'"
+            "; img-src 'self' data: https://lh3.googleusercontent.com"
+            "; font-src 'self'"
+            "; connect-src 'self'"
+            "; frame-ancestors 'none'"
+            "; base-uri 'self'"
+            "; form-action 'self'"
+            "; object-src 'none'"
+            "; worker-src 'self'"
+            "; manifest-src 'self'"
+        )
+
+        # ── Relaxed CSP (Swagger UI / ReDoc) ─────────────────
+        self.docs_csp = (
+            "default-src 'self'"
+            "; script-src 'self' 'unsafe-inline'"
+            " https://cdn.jsdelivr.net/npm/swagger-ui-dist@5"
+            "/swagger-ui-bundle.js"
+            "; style-src 'self' 'unsafe-inline'"
+            " https://cdn.jsdelivr.net/npm/swagger-ui-dist@5"
+            "/swagger-ui.css"
+            "; img-src 'self' data:"
+            " https://fastapi.tiangolo.com/img/favicon.png"
+            " https://lh3.googleusercontent.com"
+            "; font-src 'self'"
+            "; connect-src 'self'"
+            " https://cdn.jsdelivr.net/npm/swagger-ui-dist@5"
+            "/swagger-ui.css.map"
+            "; frame-ancestors 'none'"
+            "; base-uri 'self'"
+            "; form-action 'self'"
+            "; object-src 'none'"
+            "; worker-src 'self'"
+            "; manifest-src 'self'"
+        )
 
     async def dispatch(
         self,
@@ -74,23 +124,12 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
         response.headers["X-XSS-Protection"] = "1; mode=block"
         response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
 
-        # Content Security Policy
-        # Allow jsdelivr CDN for FastAPI's Swagger UI (/docs) and ReDoc (/redoc)
-        csp_parts = [
-            "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js",
-            "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css",
-            "img-src 'self' data: https://fastapi.tiangolo.com/img/favicon.png",
-            "font-src 'self'",
-            "connect-src 'self' https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css.map",
-            "frame-ancestors 'none'",
-            "base-uri 'self'",
-            "form-action 'self'",
-            "object-src 'none'",
-            "worker-src 'self'",
-            "manifest-src 'self'",
-        ]
-        response.headers["Content-Security-Policy"] = "; ".join(csp_parts)
+        # CSP route-splitting: relaxed for docs, strict for everything else
+        path = request.url.path
+        if any(path.startswith(prefix) for prefix in self._DOCS_PREFIXES):
+            response.headers["Content-Security-Policy"] = self.docs_csp
+        else:
+            response.headers["Content-Security-Policy"] = self.strict_csp
 
         # HSTS only in production (requires HTTPS)
         if self.is_production:
