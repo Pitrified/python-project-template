@@ -79,21 +79,15 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
         )
 
         # ── Relaxed CSP (Swagger UI / ReDoc) ─────────────────
+        # Swagger UI is self-hosted from /static/swagger/ — no CDN needed.
+        # 'unsafe-inline' is required for Swagger UI's own inline scripts/styles.
         self.docs_csp = (
             "default-src 'self'"
             "; script-src 'self' 'unsafe-inline'"
-            " https://cdn.jsdelivr.net/npm/swagger-ui-dist@5"
-            "/swagger-ui-bundle.js"
             "; style-src 'self' 'unsafe-inline'"
-            " https://cdn.jsdelivr.net/npm/swagger-ui-dist@5"
-            "/swagger-ui.css"
             "; img-src 'self' data:"
-            " https://fastapi.tiangolo.com/img/favicon.png"
-            " https://lh3.googleusercontent.com"
             "; font-src 'self'"
             "; connect-src 'self'"
-            " https://cdn.jsdelivr.net/npm/swagger-ui-dist@5"
-            "/swagger-ui.css.map"
             "; frame-ancestors 'none'"
             "; base-uri 'self'"
             "; form-action 'self'"

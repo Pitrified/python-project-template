@@ -92,13 +92,14 @@ def test_strict_csp_on_api_routes(client: TestClient) -> None:
 
 
 def test_relaxed_csp_on_docs(client: TestClient) -> None:
-    """The /docs route gets the relaxed CSP with CDN allowances."""
+    """The /docs route gets a relaxed CSP without any CDN references."""
     response = client.get("/docs", follow_redirects=False)
     # /docs returns 200 in debug mode (our test config has debug=True)
     if response.status_code == 200:
         csp = response.headers["content-security-policy"]
         assert "'unsafe-inline'" in csp
-        assert "cdn.jsdelivr.net" in csp
+        # Swagger is self-hosted — no CDN should appear in CSP
+        assert "cdn.jsdelivr.net" not in csp
 
 
 def test_relaxed_csp_on_openapi_json(client: TestClient) -> None:

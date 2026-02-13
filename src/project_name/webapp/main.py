@@ -5,17 +5,21 @@ Creates and configures the FastAPI application instance.
 
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
-from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi import Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.openapi.docs import get_redoc_html
+from fastapi.openapi.docs import get_swagger_ui_html
+from fastapi.openapi.docs import get_swagger_ui_oauth2_redirect_html
+from fastapi.responses import HTMLResponse
 from fastapi.responses import JSONResponse
 from fastapi.responses import RedirectResponse
 from loguru import logger as lg
 from starlette.staticfiles import StaticFiles
 
 from project_name.config.webapp import WebappConfig
+from project_name.params.project_name_params import get_project_name_paths
 from project_name.params.project_name_params import get_webapp_params
 from project_name.webapp.api.v1 import api_router
 from project_name.webapp.core.exceptions import NotAuthenticatedException
@@ -84,6 +88,8 @@ def create_app(config: WebappConfig | None = None) -> FastAPI:
         config = webapp_params.to_config()
 
     # Create FastAPI app
+    # docs_url and redoc_url are disabled; self-hosted routes below
+    # serve local Swagger/ReDoc assets so no external CDN is needed.
     app = FastAPI(
         title=config.app_name,
         version=config.app_version,
@@ -92,8 +98,8 @@ def create_app(config: WebappConfig | None = None) -> FastAPI:
             "Built with security best practices including rate limiting, "
             "CSRF protection, and secure session management."
         ),
-        docs_url="/docs" if config.debug else None,
-        redoc_url="/redoc" if config.debug else None,
+        docs_url=None,
+        redoc_url=None,
         openapi_url="/openapi.json" if config.debug else None,
         lifespan=lifespan,
     )
@@ -105,8 +111,12 @@ def create_app(config: WebappConfig | None = None) -> FastAPI:
     configure_templates(config)
 
     # Mount static assets (before routers so /static/… is resolved first)
-    static_dir = Path(__file__).resolve().parent / "static"
-    app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
+    paths = get_project_name_paths()
+    app.mount("/static", StaticFiles(directory=str(paths.static_fol)), name="static")
+
+    # Self-hosted API docs (Swagger UI + ReDoc) — no CDN dependencies
+    if config.debug:
+        _register_docs_routes(app)
 
     # Setup CORS middleware
     app.add_middleware(
@@ -220,4 +230,43 @@ def register_exception_handlers(app: FastAPI) -> None:
                 error_code="INTERNAL_ERROR",
                 request_id=request_id,
             ).model_dump(),
+        )
+
+
+def _register_docs_routes(app: FastAPI) -> None:
+    """Register self-hosted Swagger UI and ReDoc routes.
+
+    These serve locally-bundled JS/CSS from ``/static/swagger/`` so no
+    external CDN is referenced, keeping CSP strict.
+
+    Args:
+        app: FastAPI application instance.
+    """
+
+    @app.get("/docs", include_in_schema=False)
+    async def custom_swagger_ui_html() -> HTMLResponse:
+        """Serve Swagger UI from local static assets."""
+        return get_swagger_ui_html(
+            openapi_url=app.openapi_url or "/openapi.json",
+            title=f"{app.title} - Swagger UI",
+            swagger_js_url="/static/swagger/swagger-ui-bundle.js",
+            swagger_css_url="/static/swagger/swagger-ui.css",
+            oauth2_redirect_url=app.swagger_ui_oauth2_redirect_url,
+        )
+
+    @app.get(
+        app.swagger_ui_oauth2_redirect_url or "/docs/oauth2-redirect",
+        include_in_schema=False,
+    )
+    async def swagger_ui_redirect() -> HTMLResponse:
+        """Serve the OAuth2 redirect page for Swagger UI."""
+        return get_swagger_ui_oauth2_redirect_html()
+
+    @app.get("/redoc", include_in_schema=False)
+    async def custom_redoc_html() -> HTMLResponse:
+        """Serve ReDoc from local static assets."""
+        return get_redoc_html(
+            openapi_url=app.openapi_url or "/openapi.json",
+            title=f"{app.title} - ReDoc",
+            redoc_js_url="/static/swagger/redoc.standalone.js",
         )

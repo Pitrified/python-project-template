@@ -171,3 +171,21 @@ class TestStaticAssets:
         """Logo is served from /static/img/logo.svg."""
         response = client.get("/static/img/logo.svg")
         assert response.status_code == 200
+
+    def test_swagger_js_served(self, client: TestClient) -> None:
+        """Swagger UI JS is served from /static/swagger/swagger-ui-bundle.js."""
+        response = client.get("/static/swagger/swagger-ui-bundle.js")
+        assert response.status_code == 200
+        assert "javascript" in response.headers["content-type"]
+
+    def test_swagger_css_served(self, client: TestClient) -> None:
+        """Swagger UI CSS is served from /static/swagger/swagger-ui.css."""
+        response = client.get("/static/swagger/swagger-ui.css")
+        assert response.status_code == 200
+        assert "text/css" in response.headers["content-type"]
+
+    def test_redoc_js_served(self, client: TestClient) -> None:
+        """ReDoc JS is served from /static/swagger/redoc.standalone.js."""
+        response = client.get("/static/swagger/redoc.standalone.js")
+        assert response.status_code == 200
+        assert "javascript" in response.headers["content-type"]

@@ -6,18 +6,17 @@ to render HTML responses.
 
 from __future__ import annotations
 
-from pathlib import Path
 from typing import TYPE_CHECKING
 
 from starlette.templating import Jinja2Templates
 
+from project_name.params.project_name_params import get_project_name_paths
+
 if TYPE_CHECKING:
     from project_name.config.webapp import WebappConfig
 
-# Resolve the templates directory relative to this file
-_TEMPLATE_DIR = Path(__file__).resolve().parent.parent / "templates"
-
-templates = Jinja2Templates(directory=str(_TEMPLATE_DIR))
+# Resolve the templates directory from ProjectNamePaths (single source of truth)
+templates = Jinja2Templates(directory=str(get_project_name_paths().templates_fol))
 
 
 def configure_templates(config: WebappConfig) -> None:

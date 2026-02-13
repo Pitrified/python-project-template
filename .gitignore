@@ -16,6 +16,13 @@ data/
 # mkdocs
 site/
 
+# app
+instance/
+static/css
+static/js
+static/img
+static/swagger
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

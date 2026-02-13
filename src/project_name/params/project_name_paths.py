@@ -42,6 +42,8 @@ class ProjectNamePaths:
         self.data_fol = self.root_fol / "data"
         # static
         self.static_fol = self.root_fol / "static"
+        # templates
+        self.templates_fol = self.root_fol / "templates"
 
     def load_local_config(self) -> None:
         """Load the config for local environment."""
@@ -52,9 +54,10 @@ class ProjectNamePaths:
     def __str__(self) -> str:
         """Return the string representation of the object."""
         s = "ProjectNamePaths:\n"
-        s += f"   src_fol: {self.src_fol}\n"
-        s += f"  root_fol: {self.root_fol}\n"
-        s += f" cache_fol: {self.cache_fol}\n"
-        s += f"  data_fol: {self.data_fol}\n"
-        s += f"static_fol: {self.static_fol}\n"
+        s += f"      src_fol: {self.src_fol}\n"
+        s += f"     root_fol: {self.root_fol}\n"
+        s += f"    cache_fol: {self.cache_fol}\n"
+        s += f"     data_fol: {self.data_fol}\n"
+        s += f"   static_fol: {self.static_fol}\n"
+        s += f"templates_fol: {self.templates_fol}\n"
         return s.rstrip()

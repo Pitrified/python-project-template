@@ -94,6 +94,13 @@ The API will be available at:
 - **Docs**: http://localhost:8000/docs (Swagger UI)
 - **ReDoc**: http://localhost:8000/redoc
 
+### 5. Download Static Assets
+
+To ensure the webapp uses self-hosted assets, download the required files into the `static/` directory,
+using the [cdn_load.sh](../../scripts/webapp/cdn_load.sh) script.
+
+These files are referenced in the `/static/` routes of the webapp.
+
 ## API Endpoints
 
 ### Health Checks
