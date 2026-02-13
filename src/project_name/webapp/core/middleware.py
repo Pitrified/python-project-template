@@ -75,15 +75,22 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
         response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
 
         # Content Security Policy
-        csp = (
-            "default-src 'self'; "
-            "script-src 'self' 'unsafe-inline'; "
-            "style-src 'self' 'unsafe-inline'; "
-            "img-src 'self' data: https:; "
-            "font-src 'self'; "
-            "frame-ancestors 'none';"
-        )
-        response.headers["Content-Security-Policy"] = csp
+        # Allow jsdelivr CDN for FastAPI's Swagger UI (/docs) and ReDoc (/redoc)
+        csp_parts = [
+            "default-src 'self'",
+            "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js",
+            "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css",
+            "img-src 'self' data: https://fastapi.tiangolo.com/img/favicon.png",
+            "font-src 'self'",
+            "connect-src 'self' https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css.map",
+            "frame-ancestors 'none'",
+            "base-uri 'self'",
+            "form-action 'self'",
+            "object-src 'none'",
+            "worker-src 'self'",
+            "manifest-src 'self'",
+        ]
+        response.headers["Content-Security-Policy"] = "; ".join(csp_parts)
 
         # HSTS only in production (requires HTTPS)
         if self.is_production:
