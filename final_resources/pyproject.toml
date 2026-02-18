@@ -14,6 +14,17 @@ dependencies = [
     "tiktoken>=0.9.0",
 ]
 
+[project.optional-dependencies]
+webapp = [
+    "fastapi>=0.109.0",
+    "uvicorn[standard]>=0.27.0",
+    "python-multipart>=0.0.6",
+    "itsdangerous>=2.1.0",
+    "httpx>=0.26.0",
+    "email-validator>=2.3.0",
+    "jinja2>=3.1.0",
+]
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
