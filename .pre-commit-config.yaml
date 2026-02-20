@@ -16,17 +16,19 @@ repos:
     hooks:
       - id: uv-lock
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    # uv ruff --version
-    rev: v0.14.8
+    # uv run ruff --version
+    rev: v0.15.2
     hooks:
-      # run the linter
-      - id: ruff
+      # Run the linter.
+      - id: ruff-check
+        types_or: [python, pyi]
         args: [--fix]
-      # run the formatter
+      # Run the formatter.
       - id: ruff-format
+        types_or: [python, pyi]
   - repo: https://github.com/RobertCraigie/pyright-python
-    # uv pyright --version
-    rev: v1.1.407
+    # uv run pyright --version
+    rev: v1.1.408
     hooks:
       - id: pyright
   - repo: https://github.com/kynan/nbstripout
