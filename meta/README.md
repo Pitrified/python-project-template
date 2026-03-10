@@ -74,6 +74,12 @@ git add **/.gitkeep -f
 git commit -m "Initial commit"
 ```
 
+## Set up github pages
+
+Visit the
+[github pages settings](https://github.com/Pitrified/python-project-template/settings/pages)
+and enable github pages, setting deploy from action.
+
 ## Install additional dependencies
 
 Install the dependencies you want with the following commands

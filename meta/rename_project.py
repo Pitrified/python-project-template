@@ -82,6 +82,7 @@ class Rename:
         # Add GitHub username mapping if provided
         if self.github_username is not None:
             self.name_map["Pitrified"] = self.github_username
+            self.name_map["pitrified"] = self.github_username.lower()
 
         rprint("[bold]Name map:[/bold]")
         rprint(self.name_map)

@@ -16,6 +16,10 @@ Run the following command:
 uv sync --all-extras --all-groups
 ```
 
+## Docs
+
+Docs are available at [https://pitrified.github.io/python-project-template/](https://pitrified.github.io/python-project-template/).
+
 ## Setup
 
 ### Environment Variables
