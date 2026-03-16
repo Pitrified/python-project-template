@@ -63,6 +63,9 @@ docs = [
     "mkdocs-api-autonav>=0.2",
 ]
 
+[tool.uv.sources]
+fastapi-tools = { path = "../fastapi-tools", editable = true }
+
 [tool.pyright]
 venvPath = "."
 venv = ".venv"
