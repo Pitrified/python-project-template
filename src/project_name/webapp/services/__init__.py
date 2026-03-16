@@ -1,9 +1,4 @@
-"""Webapp services module."""
+"""Webapp services module - re-exported from fastapi_tools."""
 
-from project_name.webapp.services.auth_service import GoogleAuthService
-from project_name.webapp.services.auth_service import SessionStore
-
-__all__ = [
-    "GoogleAuthService",
-    "SessionStore",
-]
+from fastapi_tools.auth.google import GoogleAuthService as GoogleAuthService
+from fastapi_tools.auth.google import SessionStore as SessionStore

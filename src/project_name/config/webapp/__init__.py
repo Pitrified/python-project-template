@@ -1,10 +1,10 @@
-"""Webapp configuration models."""
+"""Webapp configuration models - re-exported from fastapi_tools."""
 
-from project_name.config.webapp.webapp_config import CORSConfig
-from project_name.config.webapp.webapp_config import GoogleOAuthConfig
-from project_name.config.webapp.webapp_config import RateLimitConfig
-from project_name.config.webapp.webapp_config import SessionConfig
-from project_name.config.webapp.webapp_config import WebappConfig
+from fastapi_tools.config.webapp_config import CORSConfig
+from fastapi_tools.config.webapp_config import GoogleOAuthConfig
+from fastapi_tools.config.webapp_config import RateLimitConfig
+from fastapi_tools.config.webapp_config import SessionConfig
+from fastapi_tools.config.webapp_config import WebappConfig
 
 __all__ = [
     "CORSConfig",

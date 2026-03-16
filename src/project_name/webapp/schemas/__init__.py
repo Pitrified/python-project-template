@@ -1,11 +1,11 @@
-"""Webapp schemas module."""
+"""Webapp schemas module - re-exported from fastapi_tools."""
 
-from project_name.webapp.schemas.auth_schemas import GoogleUserInfo
-from project_name.webapp.schemas.auth_schemas import LoginResponse
-from project_name.webapp.schemas.auth_schemas import SessionData
-from project_name.webapp.schemas.auth_schemas import UserResponse
-from project_name.webapp.schemas.common_schemas import ErrorResponse
-from project_name.webapp.schemas.common_schemas import HealthResponse
+from fastapi_tools.schemas.auth import GoogleUserInfo
+from fastapi_tools.schemas.auth import LoginResponse
+from fastapi_tools.schemas.auth import SessionData
+from fastapi_tools.schemas.auth import UserResponse
+from fastapi_tools.schemas.common import ErrorResponse
+from fastapi_tools.schemas.common import HealthResponse
 
 __all__ = [
     "ErrorResponse",

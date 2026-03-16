@@ -3,10 +3,9 @@
 Placeholder for future user persistence and management.
 """
 
+from fastapi_tools.schemas.auth import GoogleUserInfo
+from fastapi_tools.schemas.auth import UserResponse
 from loguru import logger as lg
-
-from project_name.webapp.schemas.auth_schemas import GoogleUserInfo
-from project_name.webapp.schemas.auth_schemas import UserResponse
 
 
 class UserService:

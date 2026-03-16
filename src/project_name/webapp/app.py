@@ -3,10 +3,10 @@
 Entry point: uvicorn project_name.webapp.app:app
 """
 
-from project_name.webapp.main import create_app
+from project_name.webapp.main import build_app
 
 # Create application instance
-app = create_app()
+app = build_app()
 
 if __name__ == "__main__":
     import uvicorn

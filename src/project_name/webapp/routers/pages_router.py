@@ -11,11 +11,9 @@ from fastapi import Query
 from fastapi import Request
 from fastapi.responses import HTMLResponse
 from fastapi.responses import RedirectResponse
-
-from project_name.webapp.core.dependencies import get_current_user
-from project_name.webapp.core.dependencies import get_optional_user
-from project_name.webapp.core.templating import templates
-from project_name.webapp.schemas.auth_schemas import SessionData
+from fastapi_tools.dependencies import get_current_user
+from fastapi_tools.dependencies import get_optional_user
+from fastapi_tools.schemas.auth import SessionData
 
 # Map OAuth error codes to user-friendly messages
 _ERROR_MESSAGES: dict[str, str] = {
@@ -58,6 +56,7 @@ async def landing(
             "message": _ERROR_MESSAGES.get(error, f"An error occurred: {error}"),
         }
 
+    templates = request.app.state.templates
     return templates.TemplateResponse(
         request,
         "pages/landing.html",
@@ -79,6 +78,7 @@ async def dashboard(
     Returns:
         Dashboard page HTML.
     """
+    templates = request.app.state.templates
     return templates.TemplateResponse(
         request,
         "pages/dashboard.html",
@@ -104,6 +104,7 @@ async def user_card_partial(
     Returns:
         User card partial HTML (no base layout).
     """
+    templates = request.app.state.templates
     return templates.TemplateResponse(
         request,
         "partials/user_card.html",
@@ -140,6 +141,7 @@ async def error_page(
     }
     message = messages.get(status_code, "An unexpected error occurred.")
 
+    templates = request.app.state.templates
     return templates.TemplateResponse(
         request,
         "pages/error.html",
