@@ -4,10 +4,9 @@ from typing import Annotated
 
 from fastapi import APIRouter
 from fastapi import Depends
-
-from project_name.webapp.core.dependencies import get_current_user
-from project_name.webapp.schemas.auth_schemas import SessionData
-from project_name.webapp.schemas.common_schemas import MessageResponse
+from fastapi_tools.dependencies import get_current_user
+from fastapi_tools.schemas.auth import SessionData
+from fastapi_tools.schemas.common import MessageResponse
 
 router = APIRouter(prefix="/api/v1", tags=["api-v1"])
 

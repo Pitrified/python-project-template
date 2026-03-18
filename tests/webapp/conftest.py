@@ -11,16 +11,16 @@ from unittest.mock import patch
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from fastapi_tools import create_app
+from fastapi_tools.config.webapp_config import CORSConfig
+from fastapi_tools.config.webapp_config import GoogleOAuthConfig
+from fastapi_tools.config.webapp_config import RateLimitConfig
+from fastapi_tools.config.webapp_config import SessionConfig
+from fastapi_tools.config.webapp_config import WebappConfig
+from fastapi_tools.schemas.auth import GoogleUserInfo
+from fastapi_tools.schemas.auth import SessionData
 import pytest
 
-from project_name.config.webapp import CORSConfig
-from project_name.config.webapp import GoogleOAuthConfig
-from project_name.config.webapp import RateLimitConfig
-from project_name.config.webapp import SessionConfig
-from project_name.config.webapp import WebappConfig
 from project_name.webapp.routers.pages_router import router as pages_router
-from project_name.webapp.schemas.auth_schemas import GoogleUserInfo
-from project_name.webapp.schemas.auth_schemas import SessionData
 
 _PROJECT_ROOT = Path(__file__).parent.parent.parent
 _STATIC_DIR = _PROJECT_ROOT / "static"

@@ -1,8 +1,7 @@
 """Tests for authentication endpoints."""
 
 from fastapi.testclient import TestClient
-
-from project_name.webapp.schemas.auth_schemas import SessionData
+from fastapi_tools.schemas.auth import SessionData
 
 
 def test_google_login_redirect(client: TestClient) -> None:

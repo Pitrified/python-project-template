@@ -7,13 +7,13 @@ Supports ENV_STAGE_TYPE (dev/prod) and ENV_LOCATION_TYPE (local/render).
 import os
 import secrets
 
+from fastapi_tools.config.webapp_config import CORSConfig
+from fastapi_tools.config.webapp_config import GoogleOAuthConfig
+from fastapi_tools.config.webapp_config import RateLimitConfig
+from fastapi_tools.config.webapp_config import SessionConfig
+from fastapi_tools.config.webapp_config import WebappConfig
 from loguru import logger as lg
 
-from project_name.config.webapp import CORSConfig
-from project_name.config.webapp import GoogleOAuthConfig
-from project_name.config.webapp import RateLimitConfig
-from project_name.config.webapp import SessionConfig
-from project_name.config.webapp import WebappConfig
 from project_name.params.env_type import EnvLocationType
 from project_name.params.env_type import EnvStageType
 
