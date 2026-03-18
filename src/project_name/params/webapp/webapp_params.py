@@ -72,6 +72,9 @@ class WebappParams:
             os.getenv("RATE_LIMIT_AUTH_REQUESTS_PER_MINUTE", "10")
         )
 
+        # Public base URL for building absolute links (not used for OAuth)
+        self.public_base_url: str | None = os.getenv("PUBLIC_BASE_URL") or None
+
         # Google OAuth settings
         self.google_client_id: str = os.getenv("GOOGLE_CLIENT_ID", "")
         self.google_client_secret: str = os.getenv("GOOGLE_CLIENT_SECRET", "")
@@ -131,6 +134,7 @@ class WebappParams:
             debug=self.debug,
             app_name=self.app_name,
             app_version=self.app_version,
+            public_base_url=self.public_base_url,
             cors=CORSConfig(
                 allow_origins=self.cors_allowed_origins,
             ),

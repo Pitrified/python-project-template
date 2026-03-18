@@ -59,8 +59,16 @@ Create a `.env` file at `~/cred/project_name/.env`:
 GOOGLE_CLIENT_ID=your_client_id_here
 GOOGLE_CLIENT_SECRET=your_client_secret_here
 
+# OAuth redirect URI - must exactly match the entry in Google Cloud Console
+# Defaults to http://localhost:{WEBAPP_PORT}/auth/google/callback when unset
+# GOOGLE_REDIRECT_URI=http://localhost:8000/auth/google/callback
+
 # Session security (required in production, auto-generated in dev)
 SESSION_SECRET_KEY=your_64_char_hex_string_here
+
+# Optional: explicit public base URL for building absolute links in templates
+# and API responses (separate from the OAuth redirect URI above)
+# PUBLIC_BASE_URL=http://localhost:8000
 
 # Optional overrides
 WEBAPP_HOST=0.0.0.0
@@ -163,6 +171,7 @@ In Render Dashboard → Your Service → **Environment**:
 | `ENV_STAGE_TYPE`       | `prod`                                               |
 | `ENV_LOCATION_TYPE`    | `render`                                             |
 | `GOOGLE_REDIRECT_URI`  | `https://your-app.onrender.com/auth/google/callback` |
+| `PUBLIC_BASE_URL`      | `https://your-app.onrender.com` (for absolute links) |
 | `CORS_ALLOWED_ORIGINS` | Your frontend domain(s)                              |
 
 ### 4. Update Google OAuth
@@ -207,8 +216,22 @@ The webapp automatically adds these security headers:
 
 **"redirect_uri_mismatch"**
 
-- Ensure the redirect URI in your `.env` matches exactly what's configured in Google Cloud Console
-- Include the full path: `http://localhost:8000/auth/google/callback`
+The OAuth redirect URI sent by the app must exactly match one of the URIs registered
+in Google Cloud Console. The app uses `GOOGLE_REDIRECT_URI` (if set) or falls back to
+`http://localhost:{WEBAPP_PORT}/auth/google/callback`.
+
+Common causes:
+
+- Accessing the app via `http://127.0.0.1:8000` while Google Console has
+  `http://localhost:8000` (or vice versa). Always use the exact hostname registered.
+- Running on a non-default port without setting `GOOGLE_REDIRECT_URI` to match.
+- Missing or mismatched entry in Google Cloud Console (check the exact string,
+  including scheme, host, port, and path).
+
+Fix for local dev: add `http://localhost:8000/auth/google/callback` to **Authorized
+redirect URIs** in Google Cloud Console and access the app via that exact URL.
+Set `GOOGLE_REDIRECT_URI=http://localhost:8000/auth/google/callback` in your `.env`
+if you want to make the configured value explicit.
 
 **"invalid_client"**
 
