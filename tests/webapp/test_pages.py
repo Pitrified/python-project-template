@@ -150,14 +150,14 @@ class TestStaticAssets:
     """Tests for static file serving."""
 
     def test_bulma_css_served(self, client: TestClient) -> None:
-        """Bulma CSS is served from /static/css/bulma.min.css."""
-        response = client.get("/static/css/bulma.min.css")
+        """Bulma CSS is served from /vendor/css/bulma.min.css."""
+        response = client.get("/vendor/css/bulma.min.css")
         assert response.status_code == 200
         assert "text/css" in response.headers["content-type"]
 
     def test_htmx_js_served(self, client: TestClient) -> None:
-        """HTMX JS is served from /static/js/htmx.min.js."""
-        response = client.get("/static/js/htmx.min.js")
+        """HTMX JS is served from /vendor/js/htmx.min.js."""
+        response = client.get("/vendor/js/htmx.min.js")
         assert response.status_code == 200
         assert "javascript" in response.headers["content-type"]
 
@@ -173,19 +173,19 @@ class TestStaticAssets:
         assert response.status_code == 200
 
     def test_swagger_js_served(self, client: TestClient) -> None:
-        """Swagger UI JS is served from /static/swagger/swagger-ui-bundle.js."""
-        response = client.get("/static/swagger/swagger-ui-bundle.js")
+        """Swagger UI JS is served from /vendor/swagger/swagger-ui-bundle.js."""
+        response = client.get("/vendor/swagger/swagger-ui-bundle.js")
         assert response.status_code == 200
         assert "javascript" in response.headers["content-type"]
 
     def test_swagger_css_served(self, client: TestClient) -> None:
-        """Swagger UI CSS is served from /static/swagger/swagger-ui.css."""
-        response = client.get("/static/swagger/swagger-ui.css")
+        """Swagger UI CSS is served from /vendor/swagger/swagger-ui.css."""
+        response = client.get("/vendor/swagger/swagger-ui.css")
         assert response.status_code == 200
         assert "text/css" in response.headers["content-type"]
 
     def test_redoc_js_served(self, client: TestClient) -> None:
-        """ReDoc JS is served from /static/swagger/redoc.standalone.js."""
-        response = client.get("/static/swagger/redoc.standalone.js")
+        """ReDoc JS is served from /vendor/swagger/redoc.standalone.js."""
+        response = client.get("/vendor/swagger/redoc.standalone.js")
         assert response.status_code == 200
         assert "javascript" in response.headers["content-type"]

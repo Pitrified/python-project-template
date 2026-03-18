@@ -31,3 +31,8 @@ migrate this template
 ## zensical
 
 mkdocs substituted with zensical
+
+## paths
+
+never use weird `parent.parent` paths, we have custom `ProjectPaths` ready for this
+update copilot instruction to explain paths pattern

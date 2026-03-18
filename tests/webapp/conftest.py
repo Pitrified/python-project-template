@@ -3,12 +3,14 @@
 from collections.abc import Generator
 from datetime import UTC
 from datetime import datetime
+from pathlib import Path
 from unittest.mock import AsyncMock
 from unittest.mock import MagicMock
 from unittest.mock import patch
 
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
+from fastapi_tools import create_app
 import pytest
 
 from project_name.config.webapp import CORSConfig
@@ -16,9 +18,13 @@ from project_name.config.webapp import GoogleOAuthConfig
 from project_name.config.webapp import RateLimitConfig
 from project_name.config.webapp import SessionConfig
 from project_name.config.webapp import WebappConfig
-from project_name.webapp.main import create_app
+from project_name.webapp.routers.pages_router import router as pages_router
 from project_name.webapp.schemas.auth_schemas import GoogleUserInfo
 from project_name.webapp.schemas.auth_schemas import SessionData
+
+_PROJECT_ROOT = Path(__file__).parent.parent.parent
+_STATIC_DIR = _PROJECT_ROOT / "static"
+_TEMPLATES_DIR = _PROJECT_ROOT / "templates"
 
 
 @pytest.fixture
@@ -51,7 +57,12 @@ def test_config() -> WebappConfig:
 @pytest.fixture
 def app(test_config: WebappConfig) -> FastAPI:
     """Create test FastAPI application."""
-    return create_app(config=test_config)
+    return create_app(
+        config=test_config,
+        extra_routers=[pages_router],
+        static_dir=_STATIC_DIR,
+        templates_dir=_TEMPLATES_DIR,
+    )
 
 
 @pytest.fixture
@@ -113,7 +124,7 @@ def authenticated_client(
 @pytest.fixture
 def mock_google_oauth() -> Generator[MagicMock]:
     """Mock Google OAuth HTTP calls."""
-    with patch("project_name.webapp.services.auth_service.httpx.AsyncClient") as mock:
+    with patch("fastapi_tools.auth.google.httpx.AsyncClient") as mock:
         mock_client = AsyncMock()
         mock.return_value.__aenter__.return_value = mock_client
 
