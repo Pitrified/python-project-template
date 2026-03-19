@@ -37,7 +37,11 @@ jobs:
       - name: Mock local dependency for CI
         run: |
           mkdir -p ../fastapi-tools
-          echo '[project]\nname = "fastapi-tools"\nversion = "0.1.0"' > ../fastapi-tools/pyproject.toml
+          cat <<EOF > ../fastapi-tools/pyproject.toml
+          [project]
+          name = "fastapi-tools"
+          version = "0.1.0"
+          EOF
 
       - name: Install dependencies
         run: uv sync --group docs
