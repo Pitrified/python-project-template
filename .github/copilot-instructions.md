@@ -64,9 +64,13 @@ cfg.to_kw(exclude_none=True)  # {"some_int": 1, "nested_model": ..., "extra": Tr
 
 **Config / Params separation**
 
-- `src/project_name/config/` holds Pydantic models that define the _shape_ of settings.
-- `src/project_name/params/` holds plain classes that load _actual values_ (from env vars, `.env` file, etc.) and instantiate config models.
-- Never read env vars directly in config models; do it in the corresponding `Params` class.
+- `src/project_name/config/` holds Pydantic `BaseModelKwargs` models that define the _shape_ of settings. Use `SecretStr` for every sensitive field. Never read env vars inside config models.
+- `src/project_name/params/` holds plain classes that load _actual values_ and instantiate config models. Non-secret values are written as Python literals; env-switching is achieved via `match` on `env_type.stage` / `env_type.location`. Secrets are the only values loaded from `os.environ[VAR]` (raises `KeyError` naturally when missing).
+- Every Params class accepts `env_type: EnvType | None = None` as its sole constructor argument. `__init__` only stores it and calls `_load_params()`. Loading is orchestrated via `_load_common_params()` then stage/location dispatch.
+- Expose the assembled settings through `to_config()` returning the corresponding Pydantic model. Always mask secret fields in `__str__` using `[REDACTED]`.
+- See `docs/guides/params_config.md` for the full reference with examples and common mistakes.
+
+The canonical reference implementations are `src/project_name/config/sample_config.py` and `src/project_name/params/sample_params.py`.
 
 **FastAPI webapp factory**  
 `create_app(config?)` in `src/project_name/webapp/main.py` wires up middleware, routers, exception handlers, static files, and Jinja2 templates. Entry point for uvicorn: `project_name.webapp.app:app`.
@@ -87,6 +91,42 @@ Use `metaclass=Singleton` for any class that must have exactly one instance per 
 - Never use em dashes (`--` or `---` or Unicode `—`). Use a hyphen `-` or rewrite the sentence.
 - Use `loguru` (`from loguru import logger as lg`) for all logging.
 - Raise descriptive custom exceptions (e.g., `UnknownEnvLocationError`) rather than bare `ValueError`/`RuntimeError`.
+
+## Docstring style
+
+Use **Google style** throughout. mkdocstrings is configured with `docstring_style: "google"`.
+
+Standard sections use a label followed by a colon, with content indented by 4 spaces:
+
+```python
+def example(value: int) -> str:
+    """One-line summary.
+
+    Extended description as plain prose.
+
+    Args:
+        value: Description of the argument.
+
+    Returns:
+        Description of the return value.
+
+    Raises:
+        KeyError: If the key is missing.
+
+    Example:
+        Brief usage example::
+
+            result = example(42)
+    """
+```
+
+**Never use NumPy / Sphinx RST underline-style headers** (`Args\n----`, `Returns\n-------`, `Attributes\n----------`, etc.).
+
+Rules:
+- Section labels: `Args:`, `Returns:`, `Raises:`, `Attributes:`, `Note:`, `Warning:`, `See Also:`, `Example:`, `Examples:` - always with a trailing colon, never with an underline.
+- `Attributes:` in class docstrings uses two levels of indentation: the attribute name at +4 spaces, its description at +8 spaces.
+- Module docstrings are narrative prose. Custom topic headings (e.g., "Pattern rules") are written as plain labelled paragraphs (`Pattern rules:`) - no underline, no RST heading markup.
+- `See Also:` lists items as bare lines indented under the section label, not as `*` bullets.
 
 ## Testing & scratch space
 
