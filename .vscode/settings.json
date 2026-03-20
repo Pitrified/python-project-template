@@ -1,6 +1,7 @@
 {
     "python.envFile": "/home/pmn/cred/python-project-template/.env",
     "cSpell.words": [
+        "asyncio",
         "dotenv",
         "googleusercontent",
         "ipynb",
