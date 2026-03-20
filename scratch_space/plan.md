@@ -18,3 +18,8 @@ mkdocs substituted with zensical
 
 never use weird `parent.parent` paths, we have custom `ProjectPaths` ready for this
 update copilot instruction to explain paths pattern
+
+## default settings in .vscode
+
+add some more default settings in the local vscode setup
+eg extensions, linting, colors

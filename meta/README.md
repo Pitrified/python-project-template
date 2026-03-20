@@ -24,8 +24,8 @@ Run the [rename_project.py](meta/rename_project.py) script to rename the project
 This will create a new folder next to the current one (sibling directory).
 
 ```bash
-# Syntax: uv run rename-project <project_name> [--repo-name <repo-name>]
-uv run rename-project my_new_project
+# Syntax: uv run rename-project <project_name> [--repo-name <repo-name>] [--github-username <username>]
+uv run rename-project my_new_project --github-username Pitrified
 ```
 
 By this point, the project is already set up with the new name.
@@ -43,6 +43,31 @@ Install the project:
 ```bash
 uv sync --all-extras --all-groups
 ```
+
+## First-time git setup
+
+Initialise a git repository and push to GitHub.
+If you supplied `--github-username` when running `rename-project`, the URLs below
+are already correct. Otherwise replace `Pitrified` with your GitHub username.
+
+```bash
+git init
+git add .
+git add **/.gitkeep -f
+git commit -m "bootstrap project"
+git branch -M main
+# HTTPS
+git remote add origin https://github.com/Pitrified/python-project-template.git
+# or SSH
+# git remote add origin git@github.com:Pitrified/python-project-template.git
+git push -u origin main
+```
+
+## First tasks
+
+Open `scratch_space/vibes/01-post-rename-cleanup.md` and follow the checklist there.
+It guides you through updating the Copilot instructions, deciding which optional
+features to keep, and verifying the project is working correctly.
 
 
 <!-- Install the optional dependencies with the following command: -->

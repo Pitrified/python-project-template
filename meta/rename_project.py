@@ -8,6 +8,7 @@
 
 from collections.abc import Generator
 from pathlib import Path
+import re
 import shutil
 from typing import Annotated
 
@@ -45,6 +46,8 @@ def update_file_content(fp: Path, name_map: dict[str, str]) -> None:
 class Rename:
     """Class to rename a project."""
 
+    _VALID_NAME = re.compile(r"^[a-z][a-z0-9_]*$")
+
     def __init__(
         self,
         project_name: str,
@@ -55,9 +58,19 @@ class Rename:
         self.project_name = project_name
         self.repo_name = repo_name
         self.github_username = github_username
+        self.validate_name()
         self.build_name_map()
         self.build_roots()
         self.build_cred_fp()
+
+    def validate_name(self) -> None:
+        """Validate that project_name is lowercase snake_case."""
+        if not self._VALID_NAME.match(self.project_name):
+            rprint(
+                f"[red]Error: '{self.project_name}' is not valid. "
+                "project_name must be lowercase snake_case (e.g. my_new_project).[/red]"
+            )
+            raise typer.Exit(code=1)
 
     def build_name_map(self) -> None:
         """Build the name map."""
@@ -121,47 +134,64 @@ class Rename:
     def copy_files(self) -> None:
         """Copy files to the new project name."""
         rprint("Copying files...")
-        # skip these directories
+        # skip these directories (matched by directory name)
         skip_fols = [
             "__pycache__",
             ".pytest_cache",
             ".ruff_cache",
             ".git",
             ".venv",
-            # "meta",
             "site",
+            "webapp_scaffold",
+            "mkdocs_integration",
         ]
-        # skip these files
+        # skip these individual files (matched by relative path)
         skip_portions = [
             "README.md",
             "poetry.lock",
             "uv.lock",
+            "meta/__init__.py",
             "meta/rename_project.py",
             "pyproject.toml",
+            "scratch_space/plan.md",
         ]
-        # special cases to rename
+        # skip all files under these path prefixes,
+        # except those listed in special_portions
+        skip_prefixes = [
+            "scratch_space/vibes/",
+        ]
+        # special cases: copied to a custom destination path
         special_portions = {
             "final_resources/README.md": "README.md",
             "final_resources/pyproject.toml": "pyproject.toml",
             "meta/README.md": "README_POST_CREATE.md",
+            "scratch_space/vibes/01-post-rename-cleanup.md": (
+                "scratch_space/vibes/01-post-rename-cleanup.md"
+            ),
         }
 
         for old_fp in rglobber(self.old_root_fol, skip_fols):
             # get the portion of the source path relative to the root
             old_relative_portion = old_fp.relative_to(self.old_root_fol)
+            old_relative_str = str(old_relative_portion)
 
             # skip certain files
-            if str(old_relative_portion) in skip_portions:
+            if old_relative_str in skip_portions:
+                continue
+
+            # skip files under skip_prefixes unless in special_portions
+            in_prefix = any(old_relative_str.startswith(p) for p in skip_prefixes)
+            if in_prefix and old_relative_str not in special_portions:
                 continue
 
             # change the file name in the relative portion
-            if str(old_relative_portion) in special_portions:
+            if old_relative_str in special_portions:
                 # change the file name in a custom way
-                new_relative_portion = Path(special_portions[str(old_relative_portion)])
+                new_relative_portion = Path(special_portions[old_relative_str])
             else:
                 # change the file name in the standard way with the name map
                 new_relative_portion = Path(
-                    replace_in_str(str(old_relative_portion), self.name_map),
+                    replace_in_str(old_relative_str, self.name_map),
                 )
 
             # get the destination path
