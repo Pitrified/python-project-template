@@ -8,7 +8,8 @@ change this plan file
 
 ## Change internal copilot instruction
 
-in renamed project prapare a skeleton -> first task in new project update internal copilot instruction
+in renamed project prepare a skeleton -> first task in new project update internal copilot instruction
+`scratch_space/vibes/01-post-rename-cleanup.md` is the file with the update plan
 
 ## Add check on names
 
@@ -36,3 +37,7 @@ mkdocs substituted with zensical
 
 never use weird `parent.parent` paths, we have custom `ProjectPaths` ready for this
 update copilot instruction to explain paths pattern
+
+## pytest async
+
+pytest async always as dep
