@@ -1,10 +1,9 @@
 # Plan
 
-## params/config full setup
+## tweaks
 
-add in sample params the correct config/params splitting with env type
-config should be a property (cached if possible)
-with optional config(for=SomeStrEnum.value) to pick a different value of config if it can hold more than one
+SAMPLE_API_KEY=some
+numper in features
 
 ## python 3.14
 

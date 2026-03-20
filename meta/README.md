@@ -52,8 +52,9 @@ are already correct. Otherwise replace `Pitrified` with your GitHub username.
 
 ```bash
 git init
-git add .
-git add **/.gitkeep -f
+git add . && git add **/.gitkeep -f
+git config user.name "Your Name"
+git config user.email "your.email@example.com"
 git commit -m "bootstrap project"
 git branch -M main
 # HTTPS
