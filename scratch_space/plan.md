@@ -5,6 +5,11 @@
 SAMPLE_API_KEY=some
 numper in features
 
+## filter some features during copy
+
+eg we have webapp scaffold, but we don't want to copy it to all projects
+add some CLI interface with questions to select which features to include, and then filter the template accordingly
+
 ## python 3.14
 
 migrate this template
