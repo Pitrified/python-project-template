@@ -51,11 +51,11 @@ When the draft spans multiple independent areas (e.g., a new router endpoint plu
 
 ## 3. Clarify (if needed)
 
-If discovery surfaces major ambiguities or design choices the user likely cares about, use #tool:vscode/askQuestions. Keep questions focused - don't ask about things you can deduce. If answers change scope, loop back to **Discover**.
+If discovery surfaces major ambiguities or design choices the user likely cares about, use #tool:vscode/askQuestions . Keep questions focused - don't ask about things you can deduce. If answers change scope, loop back to **Discover**.
 
 ## 4. Produce
 
-Generate the output for the chosen mode (see format specs below). Show the full output to the user. Optionally save intermediate findings to `/memories/session/draft-to-plan.md` via #tool:vscode/memory.
+Generate the output for the chosen mode (see format specs below). Show the full output to the user. Optionally save intermediate findings to `/memories/session/draft-to-plan.md` via #tool:vscode/memory .
 
 ## 5. Refine
 
