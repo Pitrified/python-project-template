@@ -66,7 +66,9 @@ git push -u origin main
 
 ## First tasks
 
-Open `scratch_space/vibes/01-post-rename-cleanup.md` and follow the checklist there.
+Open the
+[copilot post rename cleanup](scratch_space/vibes/01-post-rename-cleanup.md)
+and follow the checklist there.
 It guides you through updating the Copilot instructions, deciding which optional
 features to keep, and verifying the project is working correctly.
 
