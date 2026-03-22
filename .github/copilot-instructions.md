@@ -94,6 +94,8 @@ Use `metaclass=Singleton` for any class that must have exactly one instance per 
 
 ## Documentation
 
+Always keep the `docs/` folder updated at the end of a task.
+
 ### Docs folder
 
 - `docs/` holds MkDocs source. `mkdocs.yml` configures the site with the Material theme, mkdocstrings for API reference.
@@ -157,3 +159,5 @@ After every code change, run the full verification suite before considering the 
 ```bash
 uv run pytest && uv run ruff check . && uv run pyright
 ```
+
+Then update the docs.
