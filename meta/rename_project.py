@@ -158,15 +158,15 @@ class Rename:
         # skip all files under these path prefixes,
         # except those listed in special_portions
         skip_prefixes = [
-            "scratch_space/vibes/",
+            "scratch_space/00_vibes/",
         ]
         # special cases: copied to a custom destination path
         special_portions = {
             "final_resources/README.md": "README.md",
             "final_resources/pyproject.toml": "pyproject.toml",
             "meta/README.md": "README_POST_CREATE.md",
-            "scratch_space/vibes/01-post-rename-cleanup.md": (
-                "scratch_space/vibes/01-post-rename-cleanup.md"
+            "scratch_space/00_vibes/01-post-rename-cleanup.md": (
+                "scratch_space/00_vibes/01-post-rename-cleanup.md"
             ),
         }
 
