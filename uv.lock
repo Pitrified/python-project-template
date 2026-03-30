@@ -465,7 +465,7 @@ wheels = [
 [[package]]
 name = "fastapi-tools"
 version = "0.1.0"
-source = { editable = "../fastapi-tools" }
+source = { git = "https://github.com/Pitrified/fastapi-tools?rev=v0.1.0#33379c80a76ca907673514bd0d9485808b1710c2" }
 dependencies = [
     { name = "email-validator" },
     { name = "fastapi" },
@@ -478,63 +478,6 @@ dependencies = [
     { name = "python-multipart" },
     { name = "starlette" },
     { name = "uvicorn", extra = ["standard"] },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "email-validator", specifier = ">=2.3.0" },
-    { name = "fastapi", specifier = ">=0.109.0" },
-    { name = "httpx", specifier = ">=0.26.0" },
-    { name = "itsdangerous", specifier = ">=2.1.0" },
-    { name = "jinja2", specifier = ">=3.1.0" },
-    { name = "loguru", specifier = ">=0.7.3" },
-    { name = "pydantic", specifier = ">=2.0" },
-    { name = "python-dotenv", specifier = ">=1.0.0" },
-    { name = "python-multipart", specifier = ">=0.0.6" },
-    { name = "starlette", specifier = ">=0.36.0" },
-    { name = "uvicorn", extras = ["standard"], specifier = ">=0.27.0" },
-]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "detect-secrets", specifier = ">=1.5.0" },
-    { name = "ipykernel", specifier = ">=6.29.5" },
-    { name = "ipywidgets", specifier = ">=8.1.5" },
-    { name = "mkdocs", specifier = ">=1.6" },
-    { name = "mkdocs-api-autonav", specifier = ">=0.2" },
-    { name = "mkdocs-material", specifier = ">=9.5" },
-    { name = "nbformat", specifier = ">=5.10.4" },
-    { name = "nbstripout", specifier = ">=0.8.2" },
-    { name = "pre-commit", specifier = ">=4.1.0" },
-    { name = "pyright", extras = ["nodejs"], specifier = ">=1.1.407" },
-    { name = "pytest", specifier = ">=8.3.4" },
-    { name = "pytest-asyncio", specifier = ">=0.24.0" },
-    { name = "rich", specifier = ">=13.9.4" },
-    { name = "ruff", specifier = ">=0.9.6" },
-    { name = "tqdm", specifier = ">=4.67.1" },
-]
-docs = [
-    { name = "mkdocs", specifier = ">=1.6" },
-    { name = "mkdocs-api-autonav", specifier = ">=0.2" },
-    { name = "mkdocs-material", specifier = ">=9.5" },
-]
-lint = [
-    { name = "detect-secrets", specifier = ">=1.5.0" },
-    { name = "pre-commit", specifier = ">=4.1.0" },
-    { name = "pyright", extras = ["nodejs"], specifier = ">=1.1.407" },
-    { name = "ruff", specifier = ">=0.9.6" },
-]
-notebook = [
-    { name = "ipykernel", specifier = ">=6.29.5" },
-    { name = "ipywidgets", specifier = ">=8.1.5" },
-    { name = "nbformat", specifier = ">=5.10.4" },
-    { name = "nbstripout", specifier = ">=0.8.2" },
-    { name = "rich", specifier = ">=13.9.4" },
-    { name = "tqdm", specifier = ">=4.67.1" },
-]
-test = [
-    { name = "pytest", specifier = ">=8.3.4" },
-    { name = "pytest-asyncio", specifier = ">=0.24.0" },
 ]
 
 [[package]]
@@ -609,6 +552,7 @@ wheels = [
 name = "griffelib"
 version = "2.0.0"
 source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/ad/06/eccbd311c9e2b3ca45dbc063b93134c57a1ccc7607c5e545264ad092c4a9/griffelib-2.0.0.tar.gz", hash = "sha256:e504d637a089f5cab9b5daf18f7645970509bf4f53eda8d79ed71cce8bd97934", size = 166312, upload-time = "2026-03-23T21:06:55.954Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/4d/51/c936033e16d12b627ea334aaaaf42229c37620d0f15593456ab69ab48161/griffelib-2.0.0-py3-none-any.whl", hash = "sha256:01284878c966508b6d6f1dbff9b6fa607bc062d8261c5c7253cb285b06422a7f", size = 142004, upload-time = "2026-02-09T19:09:40.561Z" },
 ]
@@ -1795,7 +1739,7 @@ test = [
 requires-dist = [
     { name = "chroma-haystack", specifier = ">=2.0.1" },
     { name = "dotenv", specifier = ">=0.9.9" },
-    { name = "fastapi-tools", marker = "extra == 'webapp'", editable = "../fastapi-tools" },
+    { name = "fastapi-tools", marker = "extra == 'webapp'", git = "https://github.com/Pitrified/fastapi-tools?rev=v0.1.0" },
     { name = "haystack-ai", specifier = ">=2.10.0" },
     { name = "loguru", specifier = ">=0.7.3" },
     { name = "ollama-haystack", specifier = ">=2.3.0" },
