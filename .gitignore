@@ -22,6 +22,8 @@ static/css
 static/js
 static/img
 static/swagger
+!static/css/app.css
+!static/img/logo.svg
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
