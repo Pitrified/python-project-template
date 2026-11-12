@@ -23,6 +23,10 @@ ignore = [
     "F401", # unused import
     "T20",  # print found
 ]
+"scripts/*" = [
+    "INP001", # Implicit namespace package: scripts are run directly, not imported
+    "T20",    # print found: these are manual scripts, print is the interface
+]
 "tests/*" = [
     "ARG001", # Unused function argument: mocks and similar
     "INP001", # File `tests/...` is part of an implicit namespace package. Add an `__init__.py`. Causes a bug.
