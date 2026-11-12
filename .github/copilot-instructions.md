@@ -149,8 +149,9 @@ Rules:
 - `ruff.toml` targets Python 3.13 with `select = ["ALL"]`. Key ignores: `COM812`, `D104`, `D203`, `D213`, `D413`, `FIX002`, `RET504`, `TD002`, `TD003`.
 - Tests additionally allow `ARG001`, `INP001`, `PLR2004`, `S101`.
 - Notebooks (`*.ipynb`) additionally allow `ERA001`, `F401`, `T20`.
-- `meta/*` additionally allows `INP001`, `T20`.
+- `meta/*` and `scripts/*` additionally allow `INP001`, `T20`.
 - `max-args = 10` (pylint).
+- ruff, pyright, nbstripout and detect-secrets are pinned exactly in `pyproject.toml`, to the same version as their hook `rev` in `.pre-commit-config.yaml`. Move both together; `scripts/check_tool_pins.py` (the `tool-pins` hook) fails when they differ. Why and how: `docs/guides/pre_commit.md`, "Tool versions".
 
 ## End-of-task verification
 
